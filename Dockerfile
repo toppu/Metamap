@@ -17,6 +17,9 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 # Copy application files
 COPY . /app
 
+# Verify data directory exists
+RUN ls -la /app/data/ || echo "Data directory not found!"
+
 # Expose Streamlit port
 EXPOSE 8080
 
