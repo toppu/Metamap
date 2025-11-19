@@ -26,10 +26,8 @@ wheels/
 # Streamlit
 .streamlit/
 
-# Data files (keep structure but ignore large CSV files)
-# Uncomment to ignore data files:
-# data/*.csv
-# !data/.gitkeep
+# Data files are public and included in repository
+# (No data files are ignored)
 
 # IDE
 .vscode/
@@ -46,9 +44,10 @@ Thumbs.db
 *.log
 podman_*.log
 
-# Temporary files
-temp_*
+# Temporary files (but not in data directory)
 *.tmp
+temp_*.py
+temp_*.log
 
 # Documentation (keep in repo)
 !README.md
