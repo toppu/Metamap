@@ -44,9 +44,14 @@ A Python-based web application for microbiome data analysis and AI predictions, 
 
 ### Clone the Repository
 
+This is a fork of [ZakariyaTaha/Mcb_Website](https://github.com/ZakariyaTaha/Mcb_Website.git) with improvements including:
+- Removed all R dependencies (pure Python implementation)
+- Code refactoring for better maintainability
+- Improved build performance and reduced container size
+
 ```bash
-git clone https://github.com/ZakariyaTaha/Mcb_Website.git
-cd Mcb_Website
+git clone https://github.com/toppu/Metamap.git
+cd Metamap
 ```
 
 ### Option 1: Using Podman/Docker (Recommended)
@@ -82,15 +87,10 @@ The application will be available at: **http://localhost:8080**
 pip install -r requirements.txt
 
 # Run the application
-streamlit run app.py --server.port=8080
+streamlit run app.py
 ```
 
-Access the application at: **http://localhost:8080**
-
-### Option 3: Use the Deployed Version
-
-Access the live version deployed on Google Cloud:
-https://toolbox---mcb-website-wuptr62oda-oa.a.run.app/
+Access the application at: **http://localhost:8501** (default Streamlit port)
 
 ## Data Format Requirements
 
@@ -107,7 +107,7 @@ https://toolbox---mcb-website-wuptr62oda-oa.a.run.app/
 ## Project Structure
 
 ```
-Mcb_Website/
+Metamap/
 ├── app.py                           # Main application entry point
 ├── src/
 │   ├── pages/                       # Streamlit pages
