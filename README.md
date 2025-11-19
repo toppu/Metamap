@@ -141,25 +141,14 @@ Metamap/
 
 This project was successfully migrated from R+Python (using rpy2) to **pure Python** in November 2025.
 
-**Key achievements:**
-- ✅ Eliminated all R dependencies (no more rpy2 bridge)
-- ✅ Build time reduced by 83% (30 min → 3 min)
-- ✅ Container image size reduced by 71% (1.2 GB → 350 MB)
-- ✅ Single-language codebase for easier maintenance and debugging
-- ✅ Faster startup and lower memory usage
+**Key changes:**
+- Eliminated all R dependencies (no more rpy2 bridge)
+- Build time reduced by 83% (30 min → 3 min)
+- Container image size reduced by 71% (1.2 GB → 350 MB)
+- Single-language codebase for easier maintenance and debugging
 
 All R functions from `vegan`, `ANCOMBC`, and `caret` packages were replaced with equivalent Python implementations using scipy, scikit-learn, and statsmodels. The migration maintains mathematical equivalence with the original R implementations.
 
 ## Documentation
 
 - [README_PODMAN.md](README_PODMAN.md) - Detailed Podman/Docker setup, troubleshooting, and production deployment guide
-
-## Support
-
-For issues or questions, please contact:
-- Technical issues: taha.zakariya99@gmail.com or ShaillayKumar.Dogra@rd.nestle.com
-- General questions: balamurugan.jagadeesan@rdls.nestle.com
-
-## License
-
-See [LICENSE](LICENSE) file for details.
