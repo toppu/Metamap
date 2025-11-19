@@ -1,0 +1,231 @@
+id,SampleName,SampleNumber,SampleorControl,bin_var,Position,Facility,Vector of Transmission,Description,SourceSink,Env,Pig,SeqTech,Listeria
+2.0,GE 1,53,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 1,Sink,Evisceration,A,Pacbio,
+2.9,GE 10,62,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 10,Sink,Evisceration,J,Pacbio,
+2.1,GE 11,63,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 11,Sink,Evisceration,K,Pacbio,
+2.11,GE 12,64,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 12,Sink,Evisceration,L,Pacbio,
+2.2,GE 3,55,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 3,Sink,Evisceration,C,Pacbio,
+2.3,GE 4,56,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 4,Sink,Evisceration,D,Pacbio,
+2.4,GE 5,57,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 5,Sink,Evisceration,E,Pacbio,
+2.5,GE 6,58,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 6,Sink,Evisceration,F,Pacbio,
+2.6,GE 7,59,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 7,Sink,Evisceration,G,Pacbio,
+2.7,GE 8,60,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 8,Sink,Evisceration,H,Pacbio,
+2.8,GE 9,61,Sample,Meat,Evisceration,Slaughterhouse,Product,GE 9,Sink,Evisceration,I,Pacbio,
+1.24,GF 1 ,25,Sample,Meat,Singeing,Slaughterhouse,Product,GF 1,Sink,Singeing,A,Pacbio,
+1.33,GF 10,34,Sample,Meat,Singeing,Slaughterhouse,Product,GF 10,Sink,Singeing,J,Pacbio,
+1.34,GF 11,35,Sample,Meat,Singeing,Slaughterhouse,Product,GF 11,Sink,Singeing,K,Pacbio,
+1.35,GF 12,36,Sample,Meat,Singeing,Slaughterhouse,Product,GF 12,Sink,Singeing,L,Pacbio,
+1.25,GF 2 ,26,Sample,Meat,Singeing,Slaughterhouse,Product,GF 2,Sink,Singeing,B,Pacbio,
+1.26,GF 3,27,Sample,Meat,Singeing,Slaughterhouse,Product,GF 3,Sink,Singeing,C,Pacbio,
+1.27,GF 4,28,Sample,Meat,Singeing,Slaughterhouse,Product,GF 4,Sink,Singeing,D,Pacbio,
+1.28,GF 5,29,Sample,Meat,Singeing,Slaughterhouse,Product,GF 5,Sink,Singeing,E,Pacbio,
+1.29,GF 6,30,Sample,Meat,Singeing,Slaughterhouse,Product,GF 6,Sink,Singeing,F,Pacbio,
+1.3,GF 7,31,Sample,Meat,Singeing,Slaughterhouse,Product,GF 7,Sink,Singeing,G,Pacbio,
+1.31,GF 8,32,Sample,Meat,Singeing,Slaughterhouse,Product,GF 8,Sink,Singeing,H,Pacbio,
+1.32,GF 9,33,Sample,Meat,Singeing,Slaughterhouse,Product,GF 9,Sink,Singeing,I,Pacbio,
+2.12,GK 1,65,Sample,Meat,Classification,Slaughterhouse,Product,GK 1,Sink,Classification,A,Pacbio,
+2.21,GK 10,74,Sample,Meat,Classification,Slaughterhouse,Product,GK 10,Sink,Classification,J,Pacbio,
+2.22,GK 11,75,Sample,Meat,Classification,Slaughterhouse,Product,GK 11,Sink,Classification,K,Pacbio,
+2.23,GK 12,76,Sample,Meat,Classification,Slaughterhouse,Product,GK 12,Sink,Classification,L,Pacbio,
+2.13,GK 2,66,Sample,Meat,Classification,Slaughterhouse,Product,GK 2,Sink,Classification,B,Pacbio,
+2.14,GK 3,67,Sample,Meat,Classification,Slaughterhouse,Product,GK 3,Sink,Classification,C,Pacbio,
+2.15,GK 4,68,Sample,Meat,Classification,Slaughterhouse,Product,GK 4,Sink,Classification,D,Pacbio,
+2.16,GK 5,69,Sample,Meat,Classification,Slaughterhouse,Product,GK 5,Sink,Classification,E,Pacbio,
+2.18,GK 7,71,Sample,Meat,Classification,Slaughterhouse,Product,GK 7,Sink,Classification,G,Pacbio,
+2.19,GK 8,72,Sample,Meat,Classification,Slaughterhouse,Product,GK 8,Sink,Classification,H,Pacbio,
+2.32,GT 11,85,Sample,Meat,Truck,Slaughterhouse,Product,GT 11,Sink,Truck,K,Pacbio,
+2.33,GT 12,86,Sample,Meat,Truck,Slaughterhouse,Product,GT 12,Sink,Truck,L,Pacbio,
+2.24,GT 2 ,77,Sample,Meat,Truck,Slaughterhouse,Product,GT 2 ,Sink,Truck,B,Pacbio,
+2.25,GT 3,78,Sample,Meat,Truck,Slaughterhouse,Product,GT 3,Sink,Truck,C,Pacbio,
+2.26,GT 4,79,Sample,Meat,Truck,Slaughterhouse,Product,GT 4,Sink,Truck,D,Pacbio,MONO
+2.27,GT 5,80,Sample,Meat,Truck,Slaughterhouse,Product,GT 5,Sink,Truck,E,Pacbio,
+2.28,GT 6,81,Sample,Meat,Truck,Slaughterhouse,Product,GT 6,Sink,Truck,F,Pacbio,
+2.29,GT 7,82,Sample,Meat,Truck,Slaughterhouse,Product,GT 7,Sink,Truck,G,Pacbio,
+2.43,GT 9,96,Sample,Meat,Truck,Slaughterhouse,Product,GT 9,Sink,Truck,I,Pacbio,
+1.0,GTOE 1,1,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 1,Source,Sticking,A,Pacbio,
+1.9,GTOE 10,10,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 10,Source,Sticking,J,Pacbio,IN
+1.1,GTOE 11,11,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 11,Source,Sticking,K,Pacbio,MONO
+1.11,GTOE 12,12,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 12,Source,Sticking,L,Pacbio,
+1.2,GTOE 3,3,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 3,Source,Sticking,C,Pacbio,
+1.4,GTOE 5,5,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 5,Source,Sticking,E,Pacbio,
+1.5,GTOE 6,6,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 6,Source,Sticking,F,Pacbio,
+1.6,GTOE 7,7,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 7,Source,Sticking,G,Pacbio,
+1.7,GTOE 8,8,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 8,Source,Sticking,H,Pacbio,
+1.8,GTOE 9,9,Sample,Meat,Sticking,Slaughterhouse,Product,GTOE 9,Source,Sticking,I,Pacbio,IN
+1.36,GW 1,37,Sample,Meat,Polishing,Slaughterhouse,Product,GW 1,Sink,Polishing,A,Pacbio,
+1.45,GW 10,46,Sample,Meat,Polishing,Slaughterhouse,Product,GW 10,Sink,Polishing,J,Pacbio,
+1.46,GW 11,47,Sample,Meat,Polishing,Slaughterhouse,Product,GW 11,Sink,Polishing,K,Pacbio,
+1.47,GW 12,48,Sample,Meat,Polishing,Slaughterhouse,Product,GW 12,Sink,Polishing,L,Pacbio,
+1.37,GW 2,38,Sample,Meat,Polishing,Slaughterhouse,Product,GW 2,Sink,Polishing,B,Pacbio,
+1.38,GW 3,39,Sample,Meat,Polishing,Slaughterhouse,Product,GW 3,Sink,Polishing,C,Pacbio,
+1.39,GW 4,40,Sample,Meat,Polishing,Slaughterhouse,Product,GW 4,Sink,Polishing,D,Pacbio,
+1.41,GW 6,42,Sample,Meat,Polishing,Slaughterhouse,Product,GW 6,Sink,Polishing,F,Pacbio,
+1.42,GW 7,43,Sample,Meat,Polishing,Slaughterhouse,Product,GW 7,Sink,Polishing,G,Pacbio,
+1.43,GW 8,44,Sample,Meat,Polishing,Slaughterhouse,Product,GW 8,Sink,Polishing,H,Pacbio,
+1.44,GW 9,45,Sample,Meat,Polishing,Slaughterhouse,Product,GW 9,Sink,Polishing,I,Pacbio,
+1.12,K 1 ,13,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 1,Source,Anal Swab,A,Pacbio,
+1.21,K 10,22,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 10,Source,Anal Swab,J,Pacbio,
+1.22,K 11,23,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 11,Source,Anal Swab,K,Pacbio,
+1.23,K 12,24,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 12,Source,Anal Swab,L,Pacbio,
+1.13,K 2 ,14,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 2,Source,Anal Swab,B,Pacbio,
+1.14,K 3,15,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 3,Source,Anal Swab,C,Pacbio,
+1.15,K 4,16,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 4,Source,Anal Swab,D,Pacbio,
+1.16,K 5,17,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 5,Source,Anal Swab,E,Pacbio,
+1.17,K 6,18,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 6,Source,Anal Swab,F,Pacbio,
+1.18,K 7,19,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 7,Source,Anal Swab,G,Pacbio,
+1.19,K 8,20,Sample,Meat,Anal Swab,Slaughterhouse,Feces,K 8,Source,Anal Swab,H,Pacbio,
+3.2,UG 11a,124,Sample,Surface,Cooling chamber (Wall_A),Slaughterhouse,Not product-associated,UG 11a,Source,Cooling chamber (Wall),,Pacbio,
+3.21,UG 11c,125,Sample,Surface,Cooling chamber (Wall_A),Slaughterhouse,Not product-associated,UG 11c,Source,Cooling chamber (Wall),,Pacbio,
+3.22,UG 12a,126,Sample,Surface,Truck (Gloves),Slaughterhouse,Staff,UG 12a,Source,Truck (Gloves),,Pacbio,
+3.23,UG 12b,127,Sample,Surface,Truck (Gloves),Slaughterhouse,Staff,UG 12b,Source,Truck (Gloves),,Pacbio,
+3.24,UG 14a,128,Sample,Surface,Truck (Wall),Slaughterhouse,Not product-associated,UG 14a,Source,Truck (Wall),,Pacbio,
+3.25,UG 14b,129,Sample,Surface,Truck (Wall),Slaughterhouse,Not product-associated,UG 14b,Source,Truck (Wall),,Pacbio,
+3.26,UG 15a,130,Sample,Surface,Lock (Hands_A),Slaughterhouse,Staff,UG 15a,Source,Lock (Hands),,Pacbio,
+3.27,UG 15b,131,Sample,Surface,Lock (Hands_A),Slaughterhouse,Staff,UG 15b,Source,Lock (Hands),,Pacbio,
+3.28,UG 15c,132,Sample,Surface,Lock (Hands_A),Slaughterhouse,Staff,UG 15c,Source,Lock (Hands),,Pacbio,
+3.29,UG 16a,133,Sample,Surface,Lock (Shoes_A),Slaughterhouse,Staff,UG 16a,Source,Lock (Shoes),,Pacbio,IN
+3.3,UG 16b,134,Sample,Surface,Lock (Shoes_A),Slaughterhouse,Staff,UG 16b,Source,Lock (Shoes),,Pacbio,
+3.31,UG 16c,135,Sample,Surface,Lock (Shoes_A),Slaughterhouse,Staff,UG 16c,Source,Lock (Shoes),,Pacbio,
+2.34,UG 1a,87,Sample,Surface,Polishing tunnel (Whips),Slaughterhouse,Product-associated,UG 1a,Source,Polishing tunnel (Whips),,Pacbio,
+2.35,UG 1b,88,Sample,Surface,Polishing tunnel (Whips),Slaughterhouse,Product-associated,UG 1b,Source,Polishing tunnel (Whips),,Pacbio,
+2.36,UG 1c,89,Sample,Surface,Polishing tunnel (Whips),Slaughterhouse,Product-associated,UG 1c,Source,Polishing tunnel (Whips),,Pacbio,
+2.37,UG 1d,90,Sample,Surface,Polishing tunnel (Whips),Slaughterhouse,Product-associated,UG 1d,Source,Polishing tunnel (Whips),,Pacbio,
+1.48,UG 24a,49,Sample,Surface,Lock brush (Clean area),Slaughterhouse,Staff,UG 24a,Source,Lock brush (Clean area),,Pacbio,MONO
+1.49,UG 28,50,Sample,Surface,Lock liquid (Clean area),Slaughterhouse,Staff,UG 28,Source,Lock liquid (Clean area),,Pacbio,
+2.38,UG 2a,91,Sample,Surface,Polishing tunnel (Nozzles),Slaughterhouse,Not product-associated,UG 2a,Source,Polishing tunnel (Nozzles),,Pacbio,
+2.39,UG 2b,92,Sample,Surface,Polishing tunnel (Nozzles),Slaughterhouse,Not product-associated,UG 2b,Source,Polishing tunnel (Nozzles),,Pacbio,
+2.41,UG 2d,94,Sample,Surface,Polishing tunnel (Nozzles),Slaughterhouse,Not product-associated,UG 2d,Source,Polishing tunnel (Nozzles),,Pacbio,
+2.42,UG 3a,95,Sample,Surface,Polishing tunnel (Water),Slaughterhouse,Product-associated,UG 3a,Source,Polishing tunnel (Water),,Pacbio,
+2.31,UG 3b,84,Sample,Surface,Polishing tunnel (Water),Slaughterhouse,Product-associated,UG 3b,Source,Polishing tunnel (Water),,Pacbio,
+2.44,UG 3c,97,Sample,Surface,Polishing tunnel (Water),Slaughterhouse,Product-associated,UG 3c,Source,Polishing tunnel (Water),,Pacbio,
+2.45,UG 3d,98,Sample,Surface,Polishing tunnel (Water),Slaughterhouse,Product-associated,UG 3d,Source,Polishing tunnel (Water),,Pacbio,
+2.46,UG 4a,99,Sample,Surface,Evisceration (Gloves),Slaughterhouse,Staff,UG 4a,Source,Evisceration (Gloves),,Pacbio,
+2.47,UG 4b,100,Sample,Surface,Evisceration (Gloves),Slaughterhouse,Staff,UG 4b,Source,Evisceration (Gloves),,Pacbio,
+2.48,UG 4c,101,Sample,Surface,Evisceration (Gloves),Slaughterhouse,Staff,UG 4c,Source,Evisceration (Gloves),,Pacbio,
+2.49,UG 4d,102,Sample,Surface,Evisceration (Gloves),Slaughterhouse,Staff,UG 4d,Source,Evisceration (Gloves),,Pacbio,
+3.0,UG 5a,104,Sample,Surface,Evisceration (Knifes),Slaughterhouse,Staff,UG 5a,Source,Evisceration (Knifes),,Pacbio,
+3.1,UG 5b,105,Sample,Surface,Evisceration (Knifes),Slaughterhouse,Staff,UG 5b,Source,Evisceration (Knifes),,Pacbio,
+3.4,UG 6a,108,Sample,Surface,Evisceration (Aprons),Slaughterhouse,Staff,UG 6a,Source,Evisceration (Aprons),,Pacbio,
+3.5,UG 6b,109,Sample,Surface,Evisceration (Aprons),Slaughterhouse,Staff,UG 6b,Source,Evisceration (Aprons),,Pacbio,
+3.6,UG 6c,110,Sample,Surface,Evisceration (Aprons),Slaughterhouse,Staff,UG 6c,Source,Evisceration (Aprons),,Pacbio,
+3.7,UG 6d,111,Sample,Surface,Evisceration (Aprons),Slaughterhouse,Staff,UG 6d,Source,Evisceration (Aprons),,Pacbio,
+3.8,UG 7a,112,Sample,Surface,Splitting saw,Slaughterhouse,Product-associated,UG 7a,Source,Splitting saw,,Pacbio,
+3.9,UG 7b,113,Sample,Surface,Splitting saw,Slaughterhouse,Product-associated,UG 7b,Source,Splitting saw,,Pacbio,
+3.11,UG 7d,115,Sample,Surface,Splitting saw,Slaughterhouse,Product-associated,UG 7d,Source,Splitting saw,,Pacbio,
+3.12,UG 8a,116,Sample,Surface,Classification (Railing),Slaughterhouse,Product-associated,UG 8a,Source,Classification (Railing),,Pacbio,
+3.13,UG 8b,117,Sample,Surface,Classification (Railing),Slaughterhouse,Product-associated,UG 8b,Source,Classification (Railing),,Pacbio,
+3.14,UG 8c,118,Sample,Surface,Classification (Railing),Slaughterhouse,Product-associated,UG 8c,Source,Classification (Railing),,Pacbio,
+3.15,UG 8d,119,Sample,Surface,Classification (Railing),Slaughterhouse,Product-associated,UG 8d,Source,Classification (Railing),,Pacbio,
+3.16,UG 9a,120,Sample,Surface,Classification (Gloves),Slaughterhouse,Staff,UG 9a,Source,Classification (Gloves),,Pacbio,
+3.17,UG 9b,121,Sample,Surface,Classification (Gloves),Slaughterhouse,Staff,UG 9b,Source,Classification (Gloves),,Pacbio,
+3.18,UG 9c,122,Sample,Surface,Classification (Gloves),Slaughterhouse,Staff,UG 9c,Source,Classification (Gloves),,Pacbio,
+3.19,UG 9d,123,Sample,Surface,Classification (Gloves),Slaughterhouse,Staff,UG 9d,Source,Classification (Gloves),,Pacbio,
+5.26,UV 11a,232,Sample,Surface,Leg hooks,Meat cutting plant,Product-associated,UV 11a,Source,Leg hooks,,Pacbio,MONO
+5.27,UV 11b,233,Sample,Surface,Leg hooks,Meat cutting plant,Product-associated,UV 11b,Source,Leg hooks,,Pacbio,MONO
+5.28,UV 11c,234,Sample,Surface,Leg hooks,Meat cutting plant,Product-associated,UV 11c,Source,Leg hooks,,Pacbio,MONO
+5.29,UV 11d,235,Sample,Surface,Leg hooks,Meat cutting plant,Product-associated,UV 11d,Source,Leg hooks,,Pacbio,MONO
+5.3,UV 15a,236,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15a,Source,Packaging (Gloves),,Pacbio,
+5.31,UV 15b,237,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15b,Source,Packaging (Gloves),,Pacbio,
+5.32,UV 15c,238,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15c,Source,Packaging (Gloves),,Pacbio,
+5.33,UV 15d,239,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15d,Source,Packaging (Gloves),,Pacbio,
+5.34,UV 15e,240,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15e,Source,Packaging (Gloves),,Pacbio,WE
+5.35,UV 15f,241,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15f,Source,Packaging (Gloves),,Pacbio,WE
+5.36,UV 15g,242,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15g,Source,Packaging (Gloves),,Pacbio,WE
+5.37,UV 15h,243,Sample,Surface,Packaging (Gloves),Meat cutting plant,Staff,UV 15h,Source,Packaging (Gloves),,Pacbio,
+5.38,UV 16a,244,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16a,Source,Packaging (Plastic),,Pacbio,
+5.39,UV 16b,245,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16b,Source,Packaging (Plastic),,Pacbio,
+5.4,UV 16c,246,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16c,Source,Packaging (Plastic),,Pacbio,
+5.41,UV 16d,247,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16d,Source,Packaging (Plastic),,Pacbio,
+5.42,UV 16e,248,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16e,Source,Packaging (Plastic),,Pacbio,
+5.43,UV 16f,249,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16f,Source,Packaging (Plastic),,Pacbio,
+5.44,UV 16g,250,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16g,Source,Packaging (Plastic),,Pacbio,
+5.45,UV 16h,251,Sample,Surface,Packaging (Plastic),Meat cutting plant,Product-associated,UV 16h,Source,Packaging (Plastic),,Pacbio,
+5.46,UV 19a,252,Sample,Surface,Lock (Hands_C),Meat cutting plant,Staff,UV 19a,Source,Lock (Hands_C),,Pacbio,
+5.47,UV 19b,253,Sample,Surface,Lock (Hands_C),Meat cutting plant,Staff,UV 19b,Source,Lock (Hands_C),,Pacbio,
+5.48,UV 19c,254,Sample,Surface,Lock (Hands_C),Meat cutting plant,Staff,UV 19c,Source,Lock (Hands_C),,Pacbio,
+5.49,UV 20a ,255,Sample,Surface,Lock (Shoes_C),Meat cutting plant,Staff,UV 20a ,Source,Lock (Shoes_C),,Pacbio,MONO
+5.5,UV 20b,256,Sample,Surface,Lock (Shoes_C),Meat cutting plant,Staff,UV 20b,Source,Lock (Shoes_C),,Pacbio,WE
+5.51,UV 20c,257,Sample,Surface,Lock (Shoes_C),Meat cutting plant,Staff,UV 20c,Source,Lock (Shoes_C),,Pacbio,MONO
+4.3,UV 2a,185,Sample,Surface,Cooling chamber (Wall_C),Meat cutting plant,Not product-associated,UV 2a,Source,Cooling chamber (Wall_C),,Pacbio,
+4.31,UV 2c,186,Sample,Surface,Cooling chamber (Wall_C),Meat cutting plant,Not product-associated,UV 2c,Source,Cooling chamber (Wall_C),,Pacbio,
+4.32,UV 4a ,187,Sample,Surface,Prime dissection (Saw),Meat cutting plant,Product-associated,UV 4a ,Source,Prime dissection (Saw),,Pacbio,
+4.33,UV 4b ,188,Sample,Surface,Prime dissection (Saw),Meat cutting plant,Product-associated,UV 4b ,Source,Prime dissection (Saw),,Pacbio,
+4.34,UV 4c,189,Sample,Surface,Prime dissection (Saw),Meat cutting plant,Product-associated,UV 4c,Source,Prime dissection (Saw),,Pacbio,WE
+4.35,UV 4d,190,Sample,Surface,Prime dissection (Saw),Meat cutting plant,Product-associated,UV 4d,Source,Prime dissection (Saw),,Pacbio,MONO
+4.36,UV 5a ,191,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5a ,Source,Fine dissection (Conveyor belt),,Pacbio,MONO
+4.37,UV 5b,192,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5b,Source,Fine dissection (Conveyor belt),,Pacbio,MONO
+4.38,UV 5c,193,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5c,Source,Fine dissection (Conveyor belt),,Pacbio,
+4.39,UV 5d,194,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5d,Source,Fine dissection (Conveyor belt),,Pacbio,
+4.4,UV 5e,195,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5e,Source,Fine dissection (Conveyor belt),,Pacbio,MONO
+4.41,UV 5f,196,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5f,Source,Fine dissection (Conveyor belt),,Pacbio,MONO
+4.42,UV 5g,197,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5g,Source,Fine dissection (Conveyor belt),,Pacbio,WE
+4.43,UV 5h,198,Sample,Surface,Fine dissection (Conveyor belt),Meat cutting plant,Product-associated,UV 5h,Source,Fine dissection (Conveyor belt),,Pacbio,
+4.44,UV 6a,199,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6a,Source,Fine dissection (Knifes),,Pacbio,
+4.45,UV 6b,200,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6b,Source,Fine dissection (Knifes),,Pacbio,
+4.46,UV 6c ,201,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6c ,Source,Fine dissection (Knifes),,Pacbio,WE
+4.47,UV 6d,202,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6d,Source,Fine dissection (Knifes),,Pacbio,
+4.48,UV 6e,203,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6e,Source,Fine dissection (Knifes),,Pacbio,
+4.49,UV 6f,204,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6f,Source,Fine dissection (Knifes),,Pacbio,
+5.0,UV 6g,206,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6g,Source,Fine dissection (Knifes),,Pacbio,WE
+5.1,UV 6h,207,Sample,Surface,Fine dissection (Knifes),Meat cutting plant,Staff,UV 6h,Source,Fine dissection (Knifes),,Pacbio,WE
+5.2,UV 7a ,208,Sample,Surface,Fine dissection (Aprons),Meat cutting plant,Staff,UV 7a ,Source,Fine dissection (Aprons),,Pacbio,
+5.6,UV 7e,212,Sample,Surface,Fine dissection (Aprons),Meat cutting plant,Staff,UV 7e,Source,Fine dissection (Aprons),,Pacbio,WE
+5.7,UV 7f,213,Sample,Surface,Fine dissection (Aprons),Meat cutting plant,Staff,UV 7f,Source,Fine dissection (Aprons),,Pacbio,MONO
+5.8,UV 7g,214,Sample,Surface,Fine dissection (Aprons),Meat cutting plant,Staff,UV 7g,Source,Fine dissection (Aprons),,Pacbio,
+5.9,UV 7h,215,Sample,Surface,Fine dissection (Aprons),Meat cutting plant,Staff,UV 7h,Source,Fine dissection (Aprons),,Pacbio,WE
+5.11,UV 8b,217,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8b,Source,Fine dissection (Gloves),,Pacbio,
+5.12,UV 8c,218,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8c,Source,Fine dissection (Gloves),,Pacbio,WE
+5.13,UV 8d,219,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8d,Source,Fine dissection (Gloves),,Pacbio,
+5.14,UV 8e,220,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8e,Source,Fine dissection (Gloves),,Pacbio,WE
+5.15,UV 8f,221,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8f,Source,Fine dissection (Gloves),,Pacbio,WE
+5.16,UV 8g,222,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8g,Source,Fine dissection (Gloves),,Pacbio,
+5.17,UV 8h,223,Sample,Surface,Fine dissection (Gloves),Meat cutting plant,Staff,UV 8h,Source,Fine dissection (Gloves),,Pacbio,WE
+5.18,UV 9a ,224,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9a ,Source,Boxes,,Pacbio,
+5.19,UV 9b,225,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9b,Source,Boxes,,Pacbio,
+5.21,UV 9d,227,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9d,Source,Boxes,,Pacbio,
+5.22,UV 9e,228,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9e,Source,Boxes,,Pacbio,
+5.23,UV 9f,229,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9f,Source,Boxes,,Pacbio,
+5.24,UV 9g,230,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9g,Source,Boxes,,Pacbio,
+5.25,UV 9h ,231,Sample,Surface,Boxes,Meat cutting plant,Product-associated,UV 9h ,Source,Boxes,,Pacbio,
+4.9,VKF 11,164,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 11,Sink,Loin cutting,K,Pacbio,MONO
+4.1,VKF 12,165,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 12,Sink,Loin cutting,L,Pacbio,MONO
+4.2,VKF 2,157,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 2,Sink,Loin cutting,B,Pacbio,WE
+4.5,VKF 5,160,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 5,Sink,Loin cutting,E,Pacbio,WE
+4.6,VKF 6,161,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 6,Sink,Loin cutting,F,Pacbio,WE
+4.7,VKF 7,162,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 7,Sink,Loin cutting,G,Pacbio,WE
+4.8,VKF 9,163,Sample,Meat,Loin cutting,Meat cutting plant,Product,VKF 9,Sink,Loin cutting,I,Pacbio,WE
+4.21,VKT 14,176,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 14,Sink,Loin packaging,B,Pacbio,
+4.22,VKT 15,177,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 15,Sink,Loin packaging,C,Pacbio,WE
+4.23,VKT 16,178,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 16,Sink,Loin packaging,D,Pacbio,WE
+4.24,VKT 17,179,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 17,Sink,Loin packaging,E,Pacbio,
+4.25,VKT 18,180,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 18,Sink,Loin packaging,F,Pacbio,
+4.26,VKT 19,181,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 19,Sink,Loin packaging,G,Pacbio,WE
+4.27,VKT 21,182,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 21,Sink,Loin packaging,I,Pacbio,WE
+4.28,VKT 23,183,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 23,Sink,Loin packaging,K,Pacbio,WE
+4.29,VKT 24,184,Sample,Meat,Loin packaging,Meat cutting plant,Product,VKT 24,Sink,Loin packaging,L,Pacbio,WE
+3.41,VKUE 12,145,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 12,Source,Cooling chamber,L,Pacbio,
+3.32,VKUE 2,136,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 2,Source,Cooling chamber,B,Pacbio,
+3.33,VKUE 3,137,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 3,Source,Cooling chamber,C,Pacbio,
+3.34,VKUE 4,138,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 4,Source,Cooling chamber,D,Pacbio,
+3.35,VKUE 5,139,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 5,Source,Cooling chamber,E,Pacbio,
+3.36,VKUE 6,140,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 6,Source,Cooling chamber,F,Pacbio,
+3.37,VKUE 7,141,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 7,Source,Cooling chamber,G,Pacbio,
+3.38,VKUE 8,142,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 8,Source,Cooling chamber,H,Pacbio,
+3.39,VKUE 9,143,Sample,Meat,Cooling chamber,Meat cutting plant,Product,VKUE 9,Source,Cooling chamber,I,Pacbio,
+4.0,VSF 11,155,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 11,Sink,Leg cutting,K,Pacbio,
+3.42,VSF 2,146,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 2,Sink,Leg cutting,B,Pacbio,WE
+3.43,VSF 3,147,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 3,Sink,Leg cutting,C,Pacbio,WE
+3.44,VSF 4,148,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 4,Sink,Leg cutting,D,Pacbio,WE
+3.45,VSF 5,149,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 5,Sink,Leg cutting,E,Pacbio,
+3.46,VSF 6,150,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 6,Sink,Leg cutting,F,Pacbio,
+3.47,VSF 7,151,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 7,Sink,Leg cutting,G,Pacbio,
+3.48,VSF 8,152,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 8,Sink,Leg cutting,H,Pacbio,
+3.49,VSF 9,153,Sample,Meat,Leg cutting,Meat cutting plant,Product,VSF 9,Sink,Leg cutting,I,Pacbio,
+4.11,VST 14,166,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 14,Sink,Leg packaging,B,Pacbio,MONO
+4.12,VST 15,167,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 15,Sink,Leg packaging,C,Pacbio,WE
+4.13,VST 16,168,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 16,Sink,Leg packaging,D,Pacbio,WE
+4.14,VST 17,169,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 17,Sink,Leg packaging,E,Pacbio,WE
+4.15,VST 18,170,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 18,Sink,Leg packaging,F,Pacbio,MONO
+4.16,VST 19,171,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 19,Sink,Leg packaging,G,Pacbio,WE
+4.17,VST 20,172,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 20,Sink,Leg packaging,H,Pacbio,
+4.18,VST 21,173,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 21,Sink,Leg packaging,I,Pacbio,WE
+4.19,VST 23,174,Sample,Meat,Leg packaging,Meat cutting plant,Product,VST 23,Sink,Leg packaging,K,Pacbio,WE

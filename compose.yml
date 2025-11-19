@@ -1,0 +1,37 @@
+services:
+  mcb-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcb-microbiome-app
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mount data directory for persistent storage
+      - ./Data:/app/Data:rw
+      # Optional: Mount for development (comment out for production)
+      # - ./app.py:/app/app.py:ro
+      # - ./helpers.py:/app/helpers.py:ro
+      # - ./r_support.R:/app/r_support.R:ro
+    environment:
+      - STREAMLIT_SERVER_PORT=8080
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - STREAMLIT_SERVER_FILE_WATCHER_TYPE=none
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    # Resource limits (adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G

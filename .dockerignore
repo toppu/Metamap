@@ -1,0 +1,62 @@
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentation
+*.md
+!README.md
+MIGRATION_PLAN.md
+R_WEB_APP_OPTIONS.md
+
+# Logs
+*.log
+r_install.log
+install.log
+error_*.log
+
+# Temporary files
+temp_*
+*.tmp
+
+# R user data
+.Rhistory
+.RData
+.Rproj.user
+
+# Docker
+Dockerfile.old
+docker-compose.yml
+podman-compose.yml
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Testing
+tests/
+test_*.py
+*_test.py
+
+# Coverage
+.coverage
+htmlcov/

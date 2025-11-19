@@ -1,0 +1,24 @@
+# Core dependencies
+numpy==1.23.5
+pandas==1.5.3
+
+# Visualization
+plotly==5.14.1
+matplotlib==3.7.1
+graphviz==0.20.1
+
+# Streamlit framework
+streamlit==1.22.0
+st_pages==0.4.1
+streamlit_plotly_events==0.0.6
+streamlit_tags==1.2.8
+
+# Machine Learning
+scikit-learn==1.2.2
+xgboost==1.7.5
+umap-learn==0.5.3
+shap==0.42.0
+
+# Statistics
+scipy==1.11.1
+statsmodels==0.14.0
