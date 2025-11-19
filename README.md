@@ -54,7 +54,22 @@ git clone https://github.com/toppu/Metamap.git
 cd Metamap
 ```
 
-### Option 1: Using Podman/Docker (Recommended)
+### Option 1: Using Pre-built Container (Fastest)
+
+**Pull and run from GitHub Container Registry:**
+```bash
+# Using Docker
+docker pull ghcr.io/toppu/metamap:latest
+docker run -p 8080:8080 ghcr.io/toppu/metamap:latest
+
+# Using Podman
+podman pull ghcr.io/toppu/metamap:latest
+podman run -p 8080:8080 ghcr.io/toppu/metamap:latest
+```
+
+See [CONTAINER.md](CONTAINER.md) for detailed container usage instructions.
+
+### Option 2: Using Podman/Docker with Local Build
 
 **Using the helper script:**
 ```bash
@@ -80,7 +95,7 @@ docker-compose up --build
 
 The application will be available at: **http://localhost:8080**
 
-### Option 2: Local Python Development
+### Option 3: Local Python Development
 
 ```bash
 # Install dependencies
@@ -151,4 +166,15 @@ All R functions from `vegan`, `ANCOMBC`, and `caret` packages were replaced with
 
 ## Documentation
 
+- [CONTAINER.md](CONTAINER.md) - Container usage guide (pull, run, tags)
 - [README_PODMAN.md](README_PODMAN.md) - Detailed Podman/Docker setup, troubleshooting, and production deployment guide
+
+## Container Registry
+
+Pre-built container images are automatically published to GitHub Container Registry:
+
+- **Latest**: `ghcr.io/toppu/metamap:latest`
+- **Versions**: `ghcr.io/toppu/metamap:v1.0.0` (when tagged)
+- **Platforms**: `linux/amd64`, `linux/arm64`
+
+Images are automatically built and published on every push to main and when version tags are created.
