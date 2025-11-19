@@ -27,8 +27,9 @@ wheels/
 .streamlit/
 
 # Data files (keep structure but ignore large CSV files)
-data/*.csv
-!data/.gitkeep
+# Uncomment to ignore data files:
+# data/*.csv
+# !data/.gitkeep
 
 # IDE
 .vscode/
