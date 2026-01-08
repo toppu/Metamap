@@ -25,26 +25,32 @@ RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false upd
     && rm -rf /var/lib/apt/lists/*
 
 # ============================================================================
-# STEP 2: Configure SSL certificates for corporate environment
+# STEP 2: Configure SSL certificates (optional for corporate environments)
 # ============================================================================
-COPY cert/ca-bundle.crt /etc/ssl/certs/ca-bundle.crt
-COPY cert/ca-bundle.trust.crt /etc/ssl/certs/ca-bundle.trust.crt
+# Copy CA certificates if they exist (ignored if not present)
+COPY cert/ca-bundle.crt* /tmp/ 2>/dev/null || true
+COPY cert/ca-bundle.trust.crt* /tmp/ 2>/dev/null || true
 
-RUN ln -sf /etc/ssl/certs/ca-bundle.trust.crt /etc/ssl/certs/ca-certificates.crt && \
-    update-ca-certificates && \
-    echo "✅ Corporate CA bundles installed"
-
-# Configure environment for both Python and R
-ENV CURL_CA_BUNDLE=/etc/ssl/certs/ca-bundle.trust.crt \
-    SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.trust.crt \
-    REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-bundle.trust.crt \
-    PIP_CERT=/etc/ssl/certs/ca-bundle.trust.crt \
-    PIP_TRUSTED_HOST="pypi.org pypi.python.org files.pythonhosted.org"
-
-# Configure R to use the CA bundle
-RUN echo 'Sys.setenv(CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.trust.crt")' >> /usr/local/lib/R/etc/Renviron.site && \
-    echo 'Sys.setenv(SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.trust.crt")' >> /usr/local/lib/R/etc/Renviron.site && \
-    echo "✅ R configured to use corporate CA bundle"
+# Install certificates only if they were copied
+RUN if [ -f /tmp/ca-bundle.crt ]; then \
+        cp /tmp/ca-bundle.crt /etc/ssl/certs/ca-bundle.crt && \
+        cp /tmp/ca-bundle.trust.crt /etc/ssl/certs/ca-bundle.trust.crt && \
+        ln -sf /etc/ssl/certs/ca-bundle.trust.crt /etc/ssl/certs/ca-certificates.crt && \
+        update-ca-certificates && \
+        echo "✅ Corporate CA bundles installed" && \
+        # Configure environment for both Python and R
+        echo 'export CURL_CA_BUNDLE=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
+        echo 'export SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
+        echo 'export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
+        echo 'export PIP_CERT=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
+        echo 'export PIP_TRUSTED_HOST="pypi.org pypi.python.org files.pythonhosted.org"' >> /etc/profile.d/ssl-certs.sh && \
+        # Configure R to use the CA bundle
+        echo 'Sys.setenv(CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.trust.crt")' >> /usr/local/lib/R/etc/Renviron.site && \
+        echo 'Sys.setenv(SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.trust.crt")' >> /usr/local/lib/R/etc/Renviron.site && \
+        echo "✅ R configured to use corporate CA bundle"; \
+    else \
+        echo "ℹ️  No corporate CA certificates found, using system defaults"; \
+    fi
 
 # ============================================================================
 # STEP 3: Install R packages (Bioconductor, ANCOMBC, etc.)
