@@ -3,7 +3,8 @@ services:
   metamap:
     build:
       context: .
-      dockerfile: Dockerfile
+      # Use Dockerfile.local for local dev with corporate certs, Dockerfile for production
+      dockerfile: ${DOCKERFILE:-Dockerfile}
     container_name: metamap
     ports:
       - "8080:8080"

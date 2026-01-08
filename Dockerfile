@@ -25,35 +25,7 @@ RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false upd
     && rm -rf /var/lib/apt/lists/*
 
 # ============================================================================
-# STEP 2: Configure SSL certificates (optional for corporate environments)
-# ============================================================================
-# Copy CA certificates if they exist (ignored if not present)
-COPY cert/ca-bundle.crt* /tmp/ 2>/dev/null || true
-COPY cert/ca-bundle.trust.crt* /tmp/ 2>/dev/null || true
-
-# Install certificates only if they were copied
-RUN if [ -f /tmp/ca-bundle.crt ]; then \
-        cp /tmp/ca-bundle.crt /etc/ssl/certs/ca-bundle.crt && \
-        cp /tmp/ca-bundle.trust.crt /etc/ssl/certs/ca-bundle.trust.crt && \
-        ln -sf /etc/ssl/certs/ca-bundle.trust.crt /etc/ssl/certs/ca-certificates.crt && \
-        update-ca-certificates && \
-        echo "✅ Corporate CA bundles installed" && \
-        # Configure environment for both Python and R
-        echo 'export CURL_CA_BUNDLE=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
-        echo 'export SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
-        echo 'export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
-        echo 'export PIP_CERT=/etc/ssl/certs/ca-bundle.trust.crt' >> /etc/profile.d/ssl-certs.sh && \
-        echo 'export PIP_TRUSTED_HOST="pypi.org pypi.python.org files.pythonhosted.org"' >> /etc/profile.d/ssl-certs.sh && \
-        # Configure R to use the CA bundle
-        echo 'Sys.setenv(CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.trust.crt")' >> /usr/local/lib/R/etc/Renviron.site && \
-        echo 'Sys.setenv(SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.trust.crt")' >> /usr/local/lib/R/etc/Renviron.site && \
-        echo "✅ R configured to use corporate CA bundle"; \
-    else \
-        echo "ℹ️  No corporate CA certificates found, using system defaults"; \
-    fi
-
-# ============================================================================
-# STEP 3: Install R packages (Bioconductor, ANCOMBC, etc.)
+# STEP 2: Install R packages (Bioconductor, ANCOMBC, etc.)
 # ============================================================================
 COPY install_packages_bioc.R /tmp/install_packages_bioc.R
 RUN Rscript /tmp/install_packages_bioc.R && rm /tmp/install_packages_bioc.R
@@ -75,7 +47,7 @@ RUN mkdir -p /app/src/utils
 COPY src/utils/r_support.R /app/src/utils/r_support.R
 
 # ============================================================================
-# STEP 4: Install Python packages
+# STEP 3: Install Python packages
 # ============================================================================
 # Create a virtual environment to bypass EXTERNALLY-MANAGED restrictions
 RUN python3 -m venv /opt/venv
@@ -89,7 +61,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ============================================================================
-# STEP 5: Copy application files
+# STEP 4: Copy application files
 # ============================================================================
 COPY app.py /app/
 COPY src/ /app/src/
@@ -98,7 +70,7 @@ COPY src/ /app/src/
 RUN mkdir -p /app/data /app/ims && chmod -R 755 /app/data /app/ims
 
 # ============================================================================
-# STEP 6: Create startup script (R service + Python app)
+# STEP 5: Create startup script (R service + Python app)
 # ============================================================================
 RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo 'set -e' >> /usr/local/bin/start-services.sh && \
@@ -122,7 +94,7 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     chmod +x /usr/local/bin/start-services.sh
 
 # ============================================================================
-# STEP 7: Configure container runtime
+# STEP 6: Configure container runtime
 # ============================================================================
 # Expose Streamlit port (Rserve on 127.0.0.1 only, not exposed)
 EXPOSE 8080

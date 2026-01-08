@@ -53,6 +53,7 @@ temp_*.log
 
 # SSL certificates (internal use only)
 cert/
+Dockerfile.local
 
 # Documentation (keep in repo)
 !README.md
