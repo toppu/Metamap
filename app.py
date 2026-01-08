@@ -27,6 +27,9 @@ if __name__ == '__main__':
     It provides basic exploratory analysis and statistical tests tools. The website also provides various pre-processing tools and Artificial Intelligence (AI) models, including SVM, Logistic Regression, KNN, and XGBoost, to help discover potential patterns and insights in your data.
     """)
 
-    st.image('./assets/glimpse.png')
+    # Display image if available
+    import os
+    if os.path.exists('./ims/glimpse.png'):
+        st.image('./ims/glimpse.png')
 
     main()

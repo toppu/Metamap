@@ -4,28 +4,20 @@ import plotly.graph_objects as go
 import plotly.io as pio
 import streamlit as st
 import umap
+from plotly.subplots import make_subplots
 from scipy.stats import kruskal, mannwhitneyu, ranksums, ttest_ind
 from sklearn.decomposition import PCA
-from sklearn.feature_selection import VarianceThreshold
 from sklearn.manifold import TSNE
 from st_pages import add_page_title
 from streamlit_plotly_events import plotly_events
-from streamlit_tags import st_tags
 
-from helpers import *
-
-# Import Python implementations instead of R
-from python_support import (
-    beta_dim_red,
-    cut_var,
-    perform_ancom_alternative,
-    shannon,
-    simpson,
-)
+from src.utils.helpers import show_pvals
+from src.utils.r_service import pandas2ri
 
 st.set_page_config(layout="wide")
 add_page_title()
 
+pandas2ri.activate()
 pio.templates.default = "plotly"
 try:
     if st.session_state.proceed and st.session_state.otu_type == 'Read counts':
@@ -52,6 +44,7 @@ try:
         st.write('The plot below shows taxonomcical diversity for each group.')
         st.write('Note that your dataset may have some unwanted data, such as "unclassified" or "unknown" microorganism in some taxa level. You can remove them from the analyzed data by adding these microorganisms to the lists below (each list corresponds to a taxonomic level).')
         col5, col6, col7 = st.columns(3)
+        col8 = col9 = col10 = col11 = None
         if st.session_state.last_level >= 4:
             if st.session_state.last_level == 7:
                 col8, col9, col10, col11 = st.columns(4)
@@ -178,14 +171,14 @@ try:
             with col3:
                 fig = px.bar(abundance0, x='microorganism', y='Sum of read counts', title=f'Most abundant microorganisms at the {selected_category} level for {st.session_state.int_to_str_var[0]}')
                 fig.update_layout(autosize=False, width=500, height=400)
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
             with col4:
                 # bar plot red
                 fig = px.bar(abundance1, x='microorganism', y='Sum of read counts', title=f'Most abundant microorganisms at the {selected_category} level for {st.session_state.int_to_str_var[1]}')
                 fig.update_layout(autosize=False, width=500, height=400)
                 fig.update_traces(marker_color='red')
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
             st.write(f'--> Most frequent microorganisms at the {selected_category} level:')
 
@@ -197,13 +190,13 @@ try:
             with col1:
                 fig = px.bar(freq0, x='microorganism', y='frequency', title=f'Most frequent microorganisms at the {selected_category} level for {st.session_state.int_to_str_var[0]}')
                 fig.update_layout(autosize=False, width=500, height=400)
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
             
             with col2:
                 fig = px.bar(freq1, x='microorganism', y='frequency', title=f'Most frequent microorganisms at the {selected_category} level for {st.session_state.int_to_str_var[1]}')
                 fig.update_layout(autosize=False, width=500, height=400)
                 fig.update_traces(marker_color='red')
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
 
             # Dealing with less features, with relative abundance
@@ -229,11 +222,11 @@ try:
                 other_microorganisms = list(combined[20:].microorganism)
             
 
-            elem0_kept = elem0[kept_microorganisms] 
+            elem0_kept = elem0[kept_microorganisms].copy() 
             elem0_others = elem0[other_microorganisms]
             elem0_kept['others'] = elem0_others.sum(axis=1)
 
-            elem1_kept = elem1[kept_microorganisms]
+            elem1_kept = elem1[kept_microorganisms].copy()
             elem1_others = elem1[other_microorganisms]
             elem1_kept['others'] = elem1_others.sum(axis=1)
 
@@ -262,7 +255,7 @@ try:
                         elem0_kept = elem0_kept.iloc[:defaut_samples]
                 
                 fig = px.bar(elem0_kept, x=elem0_kept.index, y=elem0_kept.columns, title=f'Relative abundance of microorganisms for {st.session_state.int_to_str_var[0]}', color_discrete_sequence=px.colors.qualitative.Light24)
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
             
             with col2:
                 if choice_bool:
@@ -272,7 +265,7 @@ try:
                     else: 
                         elem1_kept = elem1_kept.iloc[:defaut_samples]
                 fig = px.bar(elem1_kept, x=elem1_kept.index, y=elem1_kept.columns, title=f'Relative abundance of microorganisms for {st.session_state.int_to_str_var[1]}', color_discrete_sequence=px.colors.qualitative.Light24)       
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
             #################### Stats tests ####################
 
@@ -287,16 +280,23 @@ try:
                 pvals = pd.DataFrame(columns=stat_tests_names, index=microorganisms)
                 for i, test in enumerate(stat_tests):
                     for microorganism in microorganisms:
-                        pvals.loc[microorganism, stat_tests_names[i]] = "{:.2e}".format(test(elem0[microorganism], elem1[microorganism])[1])
+                        try:
+                            result = test(elem0[microorganism], elem1[microorganism])
+                            pvals.loc[microorganism, stat_tests_names[i]] = "{:.2e}".format(result[1])
+                        except ValueError as ve:
+                            # Handle cases where test can't be performed (e.g., identical values)
+                            if 'identical' in str(ve).lower():
+                                pvals.loc[microorganism, stat_tests_names[i]] = "N/A"
+                            else:
+                                raise
                         
                 #fig = px.imshow(pvals, text_auto=True, color_continuous_scale='Brwnyl', title='p-values of each test on original data (chosen features shown)')
                 #st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
                 show_pvals(pvals, 'p-values of each test on original data (chosen features shown')
+                csv_data = pvals.to_csv(index=False)
+                st.download_button("Export p-values", csv_data, 'p-values.csv', key='download1')
             except Exception as e:
-                st.error('There must be a problem with one of the microorganism on which one of the tests can\'t be applied. Please try to remove the problematic microorgism.')
-                raise e
-            csv_data = pvals.to_csv(index=False)
-            st.download_button("Export p-values", csv_data, 'p-values.csv', key='download1')
+                st.error('There was a problem performing the statistical tests. Please try removing some microorganisms or check your data.')
 
             #################### DIM REDUCTION ####################   
             st.divider() 
@@ -305,12 +305,12 @@ try:
             st.write('You can also also choose wether you want to perform the dimensionality reduction on the chosen taxa level or on all microorganisms (all taxa levels).')
 
             @st.cache_data
-            def assemble_all_levels(levels): 
-                data_unprocessed = pd.DataFrame(index=y.index)
-                for level in levels:
-                    to_add = level.drop(columns=['bin_var'])
-                    data_unprocessed = pd.concat([data_unprocessed, to_add], axis=1, ignore_index=True)
-                return data_unprocessed
+            def assemble_all_levels(mcb_levels): 
+                assembled_data = pd.DataFrame(index=y.index)
+                for level_data in mcb_levels:
+                    to_add = level_data.drop(columns=['bin_var'])
+                    assembled_data = pd.concat([assembled_data, to_add], axis=1, ignore_index=True)
+                return assembled_data
 
             dim_red = st.radio('Dimensionality reduction technique', ['PCA', 't-SNE', 'UMAP'])
             dim_red_dim = st.radio('Dimensionality reduction dimension', ['2D', '3D'])
@@ -321,6 +321,7 @@ try:
             if level_or_global == f'Selected taxa level: {selected_category}':
                 data_unprocessed = pd.concat([elem0, elem1], axis=0)
 
+            dim_red_func = None
             if dim_red == 'PCA':
                 dim_red_func = PCA
             elif dim_red == 't-SNE':
@@ -516,13 +517,13 @@ try:
             with col1:
                 fig = px.bar(freq0, x='microorganism', y='frequency', title=f'Most frequent microorganisms at the {selected_category} level for {st.session_state.int_to_str_var[0]}')
                 fig.update_layout(autosize=False, width=500, height=400)
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
             
             with col2:
                 fig = px.bar(freq1, x='microorganism', y='frequency', title=f'Most frequent microorganisms at the {selected_category} level for {st.session_state.int_to_str_var[1]}')
                 fig.update_layout(autosize=False, width=500, height=400)
                 fig.update_traces(marker_color='red')
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
             # Dealing with less features, with relative abundance
             st.write(f'**Below, relative abundance plot of microorganisms at the selected taxonomical level: {selected_category}.**')
@@ -568,7 +569,7 @@ try:
                     else: 
                         elem0_kept = elem0_kept.iloc[:defaut_samples]
                 fig = px.bar(elem0_kept, x=elem0_kept.index, y=elem0_kept.columns, title=f'Relative abundance of microorganisms for {st.session_state.int_to_str_var[0]}', color_discrete_sequence=px.colors.qualitative.Light24)
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
             
             with col2:
                 if choice_bool:
@@ -578,7 +579,7 @@ try:
                     else: 
                         elem1_kept = elem1_kept.iloc[:defaut_samples]
                 fig = px.bar(elem1_kept, x=elem1_kept.index, y=elem1_kept.columns, title=f'Relative abundance of microorganisms for {st.session_state.int_to_str_var[1]}', color_discrete_sequence=px.colors.qualitative.Light24)       
-                st.plotly_chart(fig, config=st.session_state.config)
+                st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
             #################### Stats tests ####################
 

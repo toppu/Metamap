@@ -28,6 +28,8 @@ wheels/
 
 # Data files are public and included in repository
 # (No data files are ignored)
+# Except temporary data files
+data/temp_*
 
 # IDE
 .vscode/
@@ -48,6 +50,9 @@ podman_*.log
 *.tmp
 temp_*.py
 temp_*.log
+
+# SSL certificates (internal use only)
+cert/
 
 # Documentation (keep in repo)
 !README.md

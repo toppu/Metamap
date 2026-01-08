@@ -1,7 +1,7 @@
-import pandas as pd
+import os
+
 import streamlit as st
 from st_pages import add_page_title
-from streamlit_tags import st_tags
 
 add_page_title()
 #st.title("Welcome to the microbiota Analysis & AI Prediction toolbox ✨")
@@ -13,4 +13,6 @@ It provides basic exploratory analysis and statistical tests tools. The website 
 """)
 
 st.write('Here is a preview of the website once the data has been uploaded: ')
-st.image('./assets/glimpse.png')
+
+if os.path.exists('./ims/glimpse.png'):
+    st.image('./ims/glimpse.png')

@@ -4,50 +4,106 @@ A Python-based web application for microbiome data analysis and AI predictions, 
 
 ## Features
 
-### Statistical Analysis
-- **Alpha diversity**: Shannon and Simpson diversity indices
-- **Beta diversity**: NMDS and PCoA with multiple distance metrics (Bray-Curtis, Jaccard, Euclidean, Gower)
-- **Differential abundance**: ANCOM alternative using Mann-Whitney U test with FDR correction
-- **Statistical tests**: t-test, Mann-Whitney U, Wilcoxon, Kruskal-Wallis
-- **Dimensionality reduction**: PCA, t-SNE, UMAP
-
-### Ecological Measures
-- Shannon diversity index for species diversity
-- Simpson diversity index for community evenness
-- Non-metric multidimensional scaling (NMDS)
-- Principal Coordinates Analysis (PCoA)
-- Multiple beta diversity metrics
-
-### Machine Learning
-- Support Vector Machines (SVM)
-- Logistic Regression
-- K-Nearest Neighbors (KNN)
-- XGBoost gradient boosting
-- SHAP feature importance analysis for model interpretability
-- Cross-validation and hyperparameter tuning
-
-### Data Processing
-- Centered log-ratio (CLR) transformation for compositional data
-- Near-zero variance feature filtering
-- Phyla ratio calculations
-- Taxonomy-based aggregation at multiple levels
-
-### Interactive Visualizations
-- Plotly-based interactive charts
-- PCA/t-SNE/UMAP scatter plots
-- Alpha diversity boxplots
-- Beta diversity ordination plots
-- Differential abundance bar charts
-- Feature importance plots
+- **Statistical Analysis**: Alpha/Beta diversity, differential abundance (ANCOM-BC), multiple statistical tests
+- **Machine Learning**: SVM, Logistic Regression, KNN, XGBoost with SHAP interpretability
+- **Ecological Measures**: Shannon/Simpson indices, NMDS, PCoA, multiple distance metrics
+- **Interactive Visualizations**: Plotly-based charts for PCA, t-SNE, UMAP, diversity plots
 
 ## Quick Start
 
-### Clone the Repository
+### Using Docker/Podman
 
-This is a fork of [ZakariyaTaha/Mcb_Website](https://github.com/ZakariyaTaha/Mcb_Website.git) with improvements including:
-- Removed all R dependencies (pure Python implementation)
-- Code refactoring for better maintainability
-- Improved build performance and reduced container size
+```bash
+# Pull and run
+podman pull ghcr.io/toppu/metamap:latest
+podman run -p 8080:8080 ghcr.io/toppu/metamap:latest
+
+# Or build locally
+podman build -t metamap .
+podman run -p 8080:8080 metamap
+```
+
+### Using Docker Compose
+
+```bash
+# Start the application
+podman compose up -d --build
+
+# View logs
+podman compose logs -f
+
+# Stop
+podman compose down
+```
+
+Access at: **http://localhost:8080**
+
+## Development
+
+```bash
+# Clone repository
+git clone https://github.com/toppu/Metamap.git
+cd Metamap
+
+# Build and run
+podman compose up --build
+
+# With volume mounts for live code changes
+podman compose up
+```
+
+## Architecture
+
+Single container combining:
+- **Python/Streamlit** on port 8080 (web interface)
+- **R/Rserve** on port 6311 (ANCOM-BC statistical analysis)
+- **Base**: Bioconductor Docker image for R package compatibility
+
+## Environment Variables
+
+```bash
+STREAMLIT_SERVER_PORT=8080              # Streamlit port
+R_SERVICE_URL=http://127.0.0.1:6311    # R service URL
+PYTHONWARNINGS="ignore::DeprecationWarning:pkg_resources"
+```
+
+## Data Format
+
+Upload CSV files with:
+- **Abundance data**: Taxonomy as first column, samples as subsequent columns
+- **Metadata**: Sample IDs matching abundance data, binary grouping variable
+
+See `data/` directory for example files.
+
+## Azure Deployment
+
+```bash
+# Build and tag
+podman build -t metamap:latest .
+podman tag metamap:latest <your-acr>.azurecr.io/metamap:latest
+
+# Push to Azure Container Registry
+podman push <your-acr>.azurecr.io/metamap:latest
+
+# Deploy to Azure Container App/Instance
+```
+
+## Requirements
+
+- Python 3.12 (see `requirements.txt`)
+- R with Bioconductor packages (see `install_packages_bioc.R`)
+- 4GB RAM minimum, 8GB recommended
+
+## License
+
+MIT License - See LICENSE file
+
+## Credits
+
+Fork of [ZakariyaTaha/Mcb_Website](https://github.com/ZakariyaTaha/Mcb_Website.git) with improvements:
+- Python 3.12 compatibility
+- Updated dependencies
+- Simplified architecture
 
 ```bash
 git clone https://github.com/toppu/Metamap.git
@@ -57,6 +113,9 @@ cd Metamap
 ### Option 1: Using Pre-built Container (Fastest)
 
 **Pull and run from GitHub Container Registry:**
+
+The published image includes both Python (Streamlit) and R (ANCOM-BC) services in a single container.
+
 ```bash
 # Using Docker
 docker pull ghcr.io/toppu/metamap:latest
@@ -70,6 +129,8 @@ podman run -p 8080:8080 ghcr.io/toppu/metamap:latest
 See [CONTAINER.md](CONTAINER.md) for detailed container usage instructions.
 
 ### Option 2: Using Podman/Docker with Local Build
+
+**For local development** (uses separate containers for Python and R):
 
 **Using the helper script:**
 ```bash
@@ -92,6 +153,8 @@ podman-compose up --build
 ```bash
 docker-compose up --build
 ```
+
+**Note**: The production image (from GHCR) combines both services into a single container for easier deployment.
 
 The application will be available at: **http://localhost:8080**
 
@@ -130,16 +193,19 @@ Metamap/
 │   │   ├── Instructions.py         # Detailed instructions
 │   │   ├── Data_Upload.py          # Data upload interface
 │   │   ├── Statistical_Analysis.py # Statistical analysis tools
-│   │   ├── Ecological_Diversity.py # Diversity measures
+│   │   ├── Ecological_Diversity.py # Diversity measures + ANCOM-BC
 │   │   └── Machine_Learning.py     # ML predictions
 │   └── utils/
 │       ├── helpers.py              # Core helper functions
-│       └── python_support.py       # Statistical functions
+│       ├── r_service.py            # R service client
+│       └── r_support.R             # R functions for ANCOM-BC
 ├── data/                            # Sample data files
 ├── assets/                          # Images and static files
 ├── requirements.txt                 # Python dependencies
-├── Dockerfile                       # Container definition
-└── compose.yml                      # Container orchestration
+├── install_packages_bioc.R          # R package installation script
+├── Dockerfile                       # Combined Python + R container
+├── compose.yml                      # Container orchestration
+└── run_podman.sh                    # Helper script for Podman
 ```
 
 ## Technology Stack
@@ -148,33 +214,6 @@ Metamap/
 - **Data Processing**: pandas, numpy, scipy
 - **Machine Learning**: scikit-learn, XGBoost, SHAP
 - **Visualization**: Plotly, matplotlib
-- **Statistics**: scipy, statsmodels
-- **Container**: Podman/Docker
-- **Language**: Pure Python (no R dependencies)
-
-## Migration History
-
-This project was successfully migrated from R+Python (using rpy2) to **pure Python** in November 2025.
-
-**Key changes:**
-- Eliminated all R dependencies (no more rpy2 bridge)
-- Build time reduced by 83% (30 min → 3 min)
-- Container image size reduced by 71% (1.2 GB → 350 MB)
-- Single-language codebase for easier maintenance and debugging
-
-All R functions from `vegan`, `ANCOMBC`, and `caret` packages were replaced with equivalent Python implementations using scipy, scikit-learn, and statsmodels. The migration maintains mathematical equivalence with the original R implementations.
-
-## Documentation
-
-- [CONTAINER.md](CONTAINER.md) - Container usage guide (pull, run, tags)
-- [README_PODMAN.md](README_PODMAN.md) - Detailed Podman/Docker setup, troubleshooting, and production deployment guide
-
-## Container Registry
-
-Pre-built container images are automatically published to GitHub Container Registry:
-
-- **Latest**: `ghcr.io/toppu/metamap:latest`
-- **Versions**: `ghcr.io/toppu/metamap:v1.0.0` (when tagged)
-- **Platforms**: `linux/amd64`, `linux/arm64`
-
-Images are automatically built and published on every push to main and when version tags are created.
+- **Statistics**: scipy, statsmodels, R (ANCOM-BC via Rserve)
+- **Container**: Podman/Docker with Bioconductor base
+- **Language**: Python 3.12 + R 4.4

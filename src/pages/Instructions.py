@@ -1,11 +1,8 @@
 import pandas as pd
+import streamlit as st
 from st_pages import add_page_title
 
 add_page_title()
-
-import pandas as pd
-import streamlit as st
-from streamlit_tags import st_tags
 
 st.write('**If some specific technique (like ANCOMBC) is used in the website, you should be able to find it on the references in the paper.**')
 st.write('**Important**: Please wait until a task is executed before initiating new tasks to prevent website from crashing. Tip: Pay attention to the “Running” icon at the top right side of the webpage to know the status of a task.')
@@ -41,7 +38,10 @@ st.write('The instructions in this tab should be self-explanatory. For the used 
 st.divider()
 st.header('AI predictions')
 st.write('AI predictions allows the identification of features that predicts a certain condition and its control. Below flowchart provides a high level overview of the process steps used in the AI predictions tab: ')
-st.image('./assets/pipeline.png')
+import os
+
+if os.path.exists('./ims/pipeline.png'):
+    st.image('./ims/pipeline.png')
 st.write('The instructions are given step by step in the tab itself, and the explanations of most techniques can be found in the paper.')
 st.write('However, the following are some specific information. First, you have to determine the cutoffs to prune the data given the number of zero-values and data variance. Then, you can choose the taxa levels that may be of interest to you in the "Feature selection" part in the tab. In this part, you\'ll see "phyla ratios", which are the ratios of all phyla in the dataset. Ratio between phyla have been shown to useful and thus have been included in the predictions even though it is not part of the original dataset.')
 st.write('Attention: Because of the way the website has been coded, you have to press "Run AI now" when you want to run the AI algorithms and see the results. If you decide to change some parameters in the previous steps and run again, remember to select "Don\'t run AI predictions for now" before changing the parameters, otherwise each change will trigger a new AI run, which can crash the website.')

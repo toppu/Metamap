@@ -1,13 +1,8 @@
-import sys
-
 import pandas as pd
 import streamlit as st
 from st_pages import add_page_title
-from streamlit_plotly_events import plotly_events
-from streamlit_tags import st_tags
 
-sys.path.insert(0, './src/utils')
-from helpers import *
+from src.utils.helpers import load_data, mcb_to_taxa
 
 add_page_title()
 
@@ -63,7 +58,7 @@ if data_option == 'Upload your own data':
             st.session_state.ancom_df = st.session_state.mcb_raw.set_index('taxonomy') # assays
             st.session_state.ancom_df.columns = [f'sample{i}' for i in range(len(st.session_state.ancom_df.columns)) if st.session_state.ancom_df.columns[i] != 'taxonomy']
 
-            st.session_state.ancom_y = pd.DataFrame(st.session_state.ancom_y).reset_index()
+            st.session_state.ancom_y = pd.DataFrame(st.session_state.y).reset_index()
             st.session_state.ancom_y['id'] = [f'sample{i}' for i in range(len(st.session_state.ancom_y.id))]
             st.session_state.ancom_y.bin_var = st.session_state.ancom_y.bin_var.replace({0: st.session_state.int_to_str_var[0], 1: st.session_state.int_to_str_var[1]})
             st.session_state.ancom_y = st.session_state.ancom_y.set_index('id')

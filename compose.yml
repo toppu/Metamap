@@ -1,24 +1,25 @@
 services:
+  # Single container (Python + R combined)
   metamap:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: metamap-app
+    container_name: metamap
     ports:
       - "8080:8080"
     volumes:
       # Mount data directory for persistent storage
-      - ./Data:/app/Data:rw
-      # Optional: Mount for development (comment out for production)
-      # - ./app.py:/app/app.py:ro
-      # - ./helpers.py:/app/helpers.py:ro
-      # - ./r_support.R:/app/r_support.R:ro
+      - ./data:/app/data:rw
+      # Mount code for development (changes reflected without rebuild)
+      - ./app.py:/app/app.py:ro
+      - ./src:/app/src:ro
     environment:
       - STREAMLIT_SERVER_PORT=8080
       - STREAMLIT_SERVER_ADDRESS=0.0.0.0
       - STREAMLIT_SERVER_HEADLESS=true
       - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
       - STREAMLIT_SERVER_FILE_WATCHER_TYPE=none
+      - R_SERVICE_URL=http://127.0.0.1:6311
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/_stcore/health"]
@@ -30,8 +31,8 @@ services:
     deploy:
       resources:
         limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
           cpus: '2.0'
           memory: 4G
-        reservations:
-          cpus: '1.0'
-          memory: 2G

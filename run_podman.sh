@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # Microbiome Analysis App - Podman Compose Runner
-# Usage: ./run_podman.sh [start|stop|restart|logs|build|clean]
+# Usage: ./run_podman.sh [start|stop|restart|logs|build|clean|prod]
 
 set -e
+
+# Compose file selection
+COMPOSE_FILE="${COMPOSE_FILE:-compose.yml}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -59,8 +62,9 @@ start_app() {
     check_dependencies
     check_podman_machine
     
+    print_info "Using compose file: $COMPOSE_FILE"
     print_info "Building and starting the application..."
-    podman compose up -d --build
+    podman compose -f "$COMPOSE_FILE" up -d --build
     
     print_success "Application started!"
     print_info "Waiting for application to be healthy (this may take 60 seconds)..."
@@ -90,7 +94,7 @@ start_app() {
 # Stop the application
 stop_app() {
     print_info "Stopping the application..."
-    podman compose down
+    podman compose -f "$COMPOSE_FILE" down
     print_success "Application stopped"
 }
 
@@ -104,7 +108,7 @@ restart_app() {
 # View logs
 view_logs() {
     print_info "Showing logs (Ctrl+C to exit)..."
-    podman compose logs -f
+    podman compose -f "$COMPOSE_FILE" logs -f
 }
 
 # Build without starting
@@ -112,8 +116,9 @@ build_app() {
     check_dependencies
     check_podman_machine
     
+    print_info "Using compose file: $COMPOSE_FILE"
     print_info "Building the application..."
-    podman compose build --no-cache
+    podman compose -f "$COMPOSE_FILE" build --no-cache
     print_success "Build complete"
 }
 
@@ -188,13 +193,19 @@ case "${1:-}" in
     status)
         show_status
         ;;
+    prod)
+        export COMPOSE_FILE="compose.prod.yml"
+        print_info "Switching to production compose file"
+        start_app
+        ;;
     *)
         echo "Microbiome Analysis App - Podman Manager"
         echo ""
         echo "Usage: ./run_podman.sh [command]"
         echo ""
         echo "Commands:"
-        echo "  start     Build and start the application"
+        echo "  start     Build and start the application (development mode)"
+        echo "  prod      Build and start using production Dockerfile"
         echo "  stop      Stop the application"
         echo "  restart   Restart the application"
         echo "  logs      View application logs (follow mode)"
@@ -203,9 +214,13 @@ case "${1:-}" in
         echo "  status    Show current status"
         echo ""
         echo "Examples:"
-        echo "  ./run_podman.sh start          # Start the app"
+        echo "  ./run_podman.sh start          # Start dev (separate containers)"
+        echo "  ./run_podman.sh prod           # Start prod (combined container)"
         echo "  ./run_podman.sh logs           # View logs"
         echo "  ./run_podman.sh stop           # Stop the app"
+        echo ""
+        echo "Environment variables:"
+        echo "  COMPOSE_FILE   Override compose file (default: compose.yml)"
         echo ""
         exit 1
         ;;

@@ -39,15 +39,10 @@ from sklearn.pipeline import make_pipeline
 from sklearn.svm import SVC
 from streamlit_plotly_events import plotly_events
 
-# Import Python implementations instead of R
-from python_support import (
-    beta_dim_red,
-    cut_var,
-    perform_ancom_alternative,
-    shannon,
-    simpson,
-)
+# Import R service wrapper (replaces rpy2)
+from .r_service import call_r_function, globalenv, pandas2ri
 
+pandas2ri.activate() 
 pio.templates.default = "plotly"
 
 def filter_by_correlation(matrix, threshold=0.95):
@@ -279,9 +274,9 @@ def process_level_rel_abundance(mcb, level, keepFeature_percentage, cutoff):
     min_nonzero = int((keepFeature_percentage/100) * mcb.shape[0])
     kept_features = [feature for feature in mcb.columns if (mcb[feature] > 0).sum() >= min_nonzero]
     if cutoff > 0:
-        # Use Python implementation instead of R
-        support = cut_var(mcb, cutoff)
-        kept_features_var = np.array(mcb.columns)[~support]  # cut_var returns True for features to remove
+        cutoff_var = globalenv['cut_var']
+        support = cutoff_var(mcb, cutoff)
+        kept_features_var = np.array(mcb.columns)[np.array(support)]
         kept_features = list(set(kept_features).intersection(set(kept_features_var)))
     if level in ['kingdom', 'order', 'family', 'genus', 'species', 'class', 'phylum']:
         mcb = centered_log_ratio(mcb)

@@ -1,19 +1,20 @@
-import sys
-
-import numpy as np
 import pandas as pd
-import plotly.express as px
 import plotly.io as pio
 import streamlit as st
-from st_pages import add_page_title
-from streamlit_plotly_events import plotly_events
-from streamlit_tags import st_tags
-
-sys.path.insert(0, './src/utils')
-import graphviz
-from helpers import *
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
+from st_pages import add_page_title
+
+from src.utils.helpers import (
+    filter_by_correlation,
+    get_results,
+    process_level_abundance,
+    process_level_rel_abundance,
+    show_boxes,
+    show_confusions,
+    show_shap,
+    show_stats,
+)
 
 add_page_title()
 pio.templates.default = "plotly"
@@ -44,6 +45,7 @@ try:
             st.session_state.min_var = st.number_input('Insert a variance cutoff', min_value=0.0, max_value=10000.0, value=st.session_state.min_var)
         st.success(st.session_state.min_var)
 
+        features_f = features_g = features_p = features_c = features_o = features_k = features_s = []
         if st.session_state.last_level >= st.session_state.level_to_int['family']:
             mcb_f, features_f = process_level_abundance(st.session_state.mcb_f, 'family', st.session_state.keepFeature_percentage, st.session_state.min_var)
             mcbs.append(mcb_f)
@@ -129,6 +131,8 @@ try:
 
         # raw data
     
+    y_raw = None
+    mcb_f_raw = mcb_g_raw = mcb_p_raw = mcb_c_raw = mcb_o_raw = mcb_k_raw = mcb_s_raw = None
     if st.session_state.last_level >= st.session_state.level_to_int['family']:
         mcb_f_raw = st.session_state.mcb_f[features_f]
     if st.session_state.last_level >= st.session_state.level_to_int['genus']:
@@ -233,9 +237,9 @@ data = pd.DataFrame(index=y.index)
 data_unprocessed = pd.DataFrame(index=y.index)
 
 for level in levels:
-        data = pd.concat([data, level_to_df[level]], axis=1)
-        if level != 'phyla ratios':
-            data_unprocessed = pd.concat([data_unprocessed, level_to_df_unprocessed[level]], axis=1)
+    data = pd.concat([data, level_to_df[level]], axis=1)
+    if level != 'phyla ratios':
+        data_unprocessed = pd.concat([data_unprocessed, level_to_df_unprocessed[level]], axis=1)
 
 if data.columns.duplicated().sum() > 0: 
     st.error('Error concatenating columns, check that column names are unique between different taxa levels. \n If there\'s for example "Ambiguous Taxa" or "NA" in many levels, it raises this error. You can remove one or all features with this duplicated name in the previous section.')
@@ -271,10 +275,10 @@ depth = st.number_input('Insert the depth you want to use', min_value=1, max_val
 min_samples_leaf = st.number_input('Insert the minimum number of samples required to be at a leaf node', min_value=1, max_value=20, value=1)
 
 @st.cache_data
-def run_tree(max_depth, min_samples_leaf, data):
-    classifier = DecisionTreeClassifier(max_depth=depth, min_samples_leaf=min_samples_leaf) #100
-    clf = classifier.fit(data, y)
-    return clf 
+def run_tree(tree_max_depth, tree_min_samples_leaf, tree_data):
+    classifier = DecisionTreeClassifier(max_depth=tree_max_depth, min_samples_leaf=tree_min_samples_leaf)
+    fitted_clf = classifier.fit(tree_data, y)
+    return fitted_clf 
 
 if st.button('Run tree again'):
     run_tree.clear()
