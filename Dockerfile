@@ -65,9 +65,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # ============================================================================
 COPY app.py /app/
 COPY src/ /app/src/
+COPY data/ /app/data/
 
-# Create necessary directories
-RUN mkdir -p /app/data /app/ims && chmod -R 755 /app/data /app/ims
+# Ensure correct permissions for data directory
+RUN mkdir -p /app/ims && chmod -R 755 /app/data /app/ims
 
 # ============================================================================
 # STEP 5: Create startup script (R service + Python app)

@@ -8,6 +8,9 @@ set -e
 # Compose file selection
 COMPOSE_FILE="${COMPOSE_FILE:-compose.yml}"
 
+# Use Dockerfile.local for local development if it exists
+export DOCKERFILE="${DOCKERFILE:-Dockerfile.local}"
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
