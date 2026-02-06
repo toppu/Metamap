@@ -21,6 +21,8 @@ RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false upd
     ca-certificates \
     netcat-openbsd \
     net-tools \
+    # Nginx for reverse proxy
+    nginx \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -68,15 +70,21 @@ COPY src/ /app/src/
 COPY data/ /app/data/
 COPY assets/ /app/assets/
 COPY .streamlit/ /app/.streamlit/
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Ensure correct permissions for data directory
 RUN mkdir -p /app/ims && chmod -R 755 /app/data /app/ims
 
 # ============================================================================
-# STEP 5: Create startup script (R service + Python app)
+# STEP 5: Create startup script (nginx + R service + Python app)
 # ============================================================================
 RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo 'set -e' >> /usr/local/bin/start-services.sh && \
+    echo '' >> /usr/local/bin/start-services.sh && \
+    echo '# Start nginx in background' >> /usr/local/bin/start-services.sh && \
+    echo 'echo "=== Starting nginx on 0.0.0.0:8080 ==="' >> /usr/local/bin/start-services.sh && \
+    echo 'nginx' >> /usr/local/bin/start-services.sh && \
+    echo 'sleep 1' >> /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
     echo '# Start Rserve in background' >> /usr/local/bin/start-services.sh && \
     echo 'echo "=== Starting Rserve on 127.0.0.1:6311 ==="' >> /usr/local/bin/start-services.sh && \
@@ -91,9 +99,9 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo '  exit 1' >> /usr/local/bin/start-services.sh && \
     echo 'fi' >> /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
-    echo '# Start Streamlit application' >> /usr/local/bin/start-services.sh && \
-    echo 'echo "=== Starting Streamlit on 0.0.0.0:8080 ==="' >> /usr/local/bin/start-services.sh && \
-    echo 'exec streamlit run --server.port=8080 --server.address=0.0.0.0 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false --server.runOnSave=false --global.developmentMode=false app.py' >> /usr/local/bin/start-services.sh && \
+    echo '# Start Streamlit application on port 8501 (nginx proxies 8080 -> 8501)' >> /usr/local/bin/start-services.sh && \
+    echo 'echo "=== Starting Streamlit on 127.0.0.1:8501 ==="' >> /usr/local/bin/start-services.sh && \
+    echo 'exec streamlit run --server.port=8501 --server.address=127.0.0.1 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false --server.runOnSave=false --global.developmentMode=false app.py' >> /usr/local/bin/start-services.sh && \
     chmod +x /usr/local/bin/start-services.sh
 
 # ============================================================================

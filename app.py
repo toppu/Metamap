@@ -2,15 +2,6 @@ import os
 
 import streamlit as st
 from st_pages import Page, Section, add_page_title, show_pages
-from streamlit import config as _config
-
-# Force CORS settings for Azure deployment
-if os.getenv('WEBSITE_SITE_NAME'):  # Running on Azure
-    _config._set_option('server.enableCORS', True, 'command_line')
-    _config._set_option('server.enableXsrfProtection', False, 'command_line')
-    _config._set_option('server.enableWebsocketCompression', False, 'command_line')
-    _config._set_option('browser.serverAddress', 'metamap-toolbox.azurewebsites.net', 'command_line')
-    _config._set_option('browser.serverPort', 443, 'command_line')
 
 
 def main():
