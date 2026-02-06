@@ -16,6 +16,12 @@ maxUploadSize = 200
 # WebSocket configuration for Azure
 enableWebsocketCompression = false
 
+# Prevent server from stopping
+runOnSave = false
+
 [browser]
 # Disable server address collection since we're in production
 gatherUsageStats = false
+
+[logger]
+level = "info"
