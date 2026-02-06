@@ -67,6 +67,7 @@ COPY app.py /app/
 COPY src/ /app/src/
 COPY data/ /app/data/
 COPY assets/ /app/assets/
+COPY .streamlit/ /app/.streamlit/
 
 # Ensure correct permissions for data directory
 RUN mkdir -p /app/ims && chmod -R 755 /app/data /app/ims
@@ -111,6 +112,8 @@ ENV STREAMLIT_SERVER_PORT=8080 \
     STREAMLIT_SERVER_HEADLESS=true \
     STREAMLIT_BROWSER_GATHER_USAGE_STATS=false \
     STREAMLIT_SERVER_FILE_WATCHER_TYPE=none \
+    STREAMLIT_SERVER_ENABLE_CORS=false \
+    STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false \
     R_SERVICE_URL=http://127.0.0.1:6311 \
     PYTHONWARNINGS="ignore::DeprecationWarning:pkg_resources"
 
