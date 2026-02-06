@@ -335,9 +335,35 @@ def show_pvals(pvals, title):
 @st.cache_data
 def get_results(mcb, y, features, thresholds, folds, kernel, iters, n_neighbors, estimators, max_depth): #returns metrics
 
-    X = pd.DataFrame([], columns = features, index=mcb.index)
-    for i in range(len(X.columns)):
-        X.iloc[:, i] = np.where(mcb[features[i]]<=thresholds[i],0,1)
+    # Check for duplicate features and remove them
+    if len(features) != len(set(features)):
+        st.warning('⚠️ Duplicate features detected in the decision tree output. Removing duplicates...')
+        # Keep only unique features with their first occurrence thresholds
+        unique_features = []
+        unique_thresholds = []
+        for feat, thresh in zip(features, thresholds):
+            if feat not in unique_features:
+                unique_features.append(feat)
+                unique_thresholds.append(thresh)
+        features = unique_features
+        thresholds = unique_thresholds
+        st.info(f'Using {len(features)} unique features: {features}')
+    
+    # Create binary transformed dataframe with explicit int dtype
+    X = pd.DataFrame(index=mcb.index)
+    for i, (feat, thresh) in enumerate(zip(features, thresholds)):
+        # Create binary feature and explicitly convert to int
+        X[feat] = np.where(mcb[feat] <= thresh, 0, 1).astype(int)
+    
+    # Ensure all columns are integers
+    X = X.astype(int)
+    
+    # Verify no duplicates in column names
+    if X.columns.duplicated().any():
+        st.error(f'❌ Duplicate column names detected after transformation: {X.columns[X.columns.duplicated()].tolist()}')
+        raise ValueError("Duplicate column names in transformed dataframe")
+    
+    st.success(f'✅ Binary transformation complete. Shape: {X.shape}, All columns are numeric: {X.dtypes.apply(lambda x: x.kind in ["i", "f"]).all()}')
     
     #############################              SVM                ####################################
 
@@ -352,12 +378,14 @@ def get_results(mcb, y, features, thresholds, folds, kernel, iters, n_neighbors,
         x_train_fold, x_test_fold = X.iloc[train_index], X.iloc[test_index]
         y_train_fold, y_test_fold = y.iloc[train_index], y.iloc[test_index]
         
-        svm.fit(x_train_fold, y_train_fold)
+        svm.fit(x_train_fold, y_train_fold.values.ravel())
         svm_results = svm_results + svm.predict_proba(x_test_fold).tolist()
 
         y_svm = pd.concat([y_svm , y_test_fold])
         x_svm =  pd.concat([x_svm, x_test_fold])
-        explainer = shap.KernelExplainer(svm.predict, x_train_fold)
+        # Use shap.sample to limit background samples for faster computation
+        background = shap.sample(x_train_fold, min(100, len(x_train_fold)))
+        explainer = shap.KernelExplainer(svm.predict, background)
         shap_vals = explainer.shap_values(x_test_fold)
         shaps = shaps + shap_vals.tolist()
 
@@ -378,7 +406,7 @@ def get_results(mcb, y, features, thresholds, folds, kernel, iters, n_neighbors,
         for train_index, test_index in skf.split(X, y):
             x_train_fold, x_test_fold = X.iloc[train_index], X.iloc[test_index]
             y_train_fold, y_test_fold = y.iloc[train_index], y.iloc[test_index]
-            knn.fit(x_train_fold, y_train_fold)
+            knn.fit(x_train_fold, y_train_fold.values.ravel())
             knn_results = knn_results + knn.predict_proba(x_test_fold).tolist()
             y_knn =pd.concat([y_knn , y_test_fold])
             x_knn =  pd.concat([x_knn, x_test_fold])
@@ -399,7 +427,7 @@ def get_results(mcb, y, features, thresholds, folds, kernel, iters, n_neighbors,
         for train_index, test_index in skf.split(X, y):
             x_train_fold, x_test_fold = X.iloc[train_index], X.iloc[test_index]
             y_train_fold, y_test_fold = y.iloc[train_index], y.iloc[test_index]
-            log.fit(x_train_fold, y_train_fold)
+            log.fit(x_train_fold, y_train_fold.values.ravel())
             log_results = log_results + log.predict_proba(x_test_fold).tolist()
             y_log = pd.concat([y_log , y_test_fold])
             x_log = pd.concat([x_log , x_test_fold])
@@ -422,7 +450,7 @@ def get_results(mcb, y, features, thresholds, folds, kernel, iters, n_neighbors,
         for train_index, test_index in skf.split(X, y):
             x_train_fold, x_test_fold = X.iloc[train_index], X.iloc[test_index]
             y_train_fold, y_test_fold = y.iloc[train_index], y.iloc[test_index]
-            clf.fit(x_train_fold, y_train_fold)
+            clf.fit(x_train_fold, y_train_fold.values.ravel())
             xg_results = xg_results + clf.predict(x_test_fold).tolist()
                     
             y_xg = pd.concat([y_xg , y_test_fold])

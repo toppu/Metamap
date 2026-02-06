@@ -274,10 +274,10 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
             n_samples = st.session_state.ancom_df.shape[1] - 1  # Exclude taxonomy column
             n_taxa = st.session_state.ancom_df.shape[0]
             st.info(f"📊 Data size: {n_samples} samples × {n_taxa} taxa")
-            if n_taxa > 500:
-                st.warning(f"⚠️ Large dataset detected ({n_taxa} taxa). ANCOM-BC several minutes to complete.")
-            elif n_taxa > 1000:
-                st.warning(f"⚠️ Very large dataset ({n_taxa} taxa). ANCOM-BC may take 3-8 minutes or more. Consider using a higher taxonomic level (e.g., family instead of genus) to reduce computation time.")
+            # if n_taxa > 500:
+            #     st.warning(f"⚠️ Large dataset detected ({n_taxa} taxa). ANCOM-BC several minutes to complete.")
+            # elif n_taxa > 1000:
+            #     st.warning(f"⚠️ Very large dataset ({n_taxa} taxa). ANCOM-BC may take 3-8 minutes or more. Consider using a higher taxonomic level (e.g., family instead of genus) to reduce computation time.")
 
             st.write("**Choose which taxa level to use for ANCOM:** ")
             level_input = st.radio('Taxa level to consider', all_levels[1:st.session_state.last_level])
@@ -296,8 +296,8 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
                 max_samples = st.number_input('Max samples (0=all)', min_value=0, max_value=1000, value=0, step=50,
                                              help='Limit analysis to first N samples. Use to speed up very large datasets.')
             
-            st.info(f"ℹ️ All {n_taxa} taxa will be sent to ANCOM-BC, which will filter internally using {prv_cut_percent}% prevalence threshold")
-            
+            # st.info(f"ℹ️ All {n_taxa} taxa will be sent to ANCOM-BC, which will filter internally using {prv_cut_percent}% prevalence threshold")
+
             # Add button to trigger ANCOM
             run_ancom_button = st.button('🚀 Run ANCOM-BC Analysis', type='primary', help='Click to start the differential abundance analysis')
 
@@ -387,9 +387,9 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
                 
                 # Poll the status file
                 # Timeout scales with complexity: longer for large datasets without pre-filtering
-                base_timeout = 300  # 5 minutes base
-                extra_timeout = (complexity // 100000) * 300  # Add 5min per 100k complexity
-                max_wait = min(base_timeout + extra_timeout, 600)  # Cap at 10 minutes
+                base_timeout = 150  # 2.5 minutes base
+                extra_timeout = (complexity // 100000) * 150  # Add 2.5min per 100k complexity
+                max_wait = min(base_timeout + extra_timeout, 300)  # Cap at 5 minutes
                 wait_interval = 2  # Check every 2 seconds
                 elapsed = 0
                 
@@ -407,17 +407,17 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
                 # Calculate dynamic estimated time based on dataset size
                 complexity = n_taxa * n_samples
                 if complexity < 10000:
-                    estimated_time = "20-40 seconds"
+                    estimated_time = "10-20 seconds"
                 elif complexity < 50000:
-                    estimated_time = "40 seconds to 2 minutes"
+                    estimated_time = "20-60 seconds"
                 elif complexity < 100000:
-                    estimated_time = "2-4 minutes"
+                    estimated_time = "1-2 minutes"
                 elif complexity < 200000:
-                    estimated_time = "4-7 minutes"
+                    estimated_time = "2-3.5 minutes"
                 elif complexity < 500000:
-                    estimated_time = "7-12 minutes"
+                    estimated_time = "3.5-6 minutes"
                 else:
-                    estimated_time = "12-20 minutes"
+                    estimated_time = "6-10 minutes"
                 
                 # Start ANCOM process (returns polling info)
                 polling_info = perform_ancom(st.session_state.ancom_df, st.session_state.ancom_y, st.session_state.tax_tab, level_input, prv_cut_percent, max_samples)
