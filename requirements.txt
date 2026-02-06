@@ -13,7 +13,7 @@ graphviz==0.20.1
 seaborn==0.12.2
 
 # Streamlit framework
-streamlit==1.28.0
+streamlit==1.25.0
 st_pages==0.4.5
 streamlit_plotly_events==0.0.6
 streamlit_tags==1.2.8
