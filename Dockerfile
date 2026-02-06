@@ -93,7 +93,7 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
     echo '# Start Streamlit application' >> /usr/local/bin/start-services.sh && \
     echo 'echo "=== Starting Streamlit on 0.0.0.0:8080 ==="' >> /usr/local/bin/start-services.sh && \
-    echo 'exec streamlit run --server.port=8080 --server.address=0.0.0.0 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false app.py' >> /usr/local/bin/start-services.sh && \
+    echo 'exec streamlit run --server.port=8080 --server.address=0.0.0.0 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false --server.runOnSave=false --global.developmentMode=false app.py' >> /usr/local/bin/start-services.sh && \
     chmod +x /usr/local/bin/start-services.sh
 
 # ============================================================================
