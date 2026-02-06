@@ -1,0 +1,18 @@
+[server]
+# Allow connections from Azure domain
+enableCORS = false
+enableXsrfProtection = false
+
+# Set headless mode for deployment
+headless = true
+
+# Configure the server address
+address = "0.0.0.0"
+port = 8000
+
+# Increase max upload size to 200MB (adjust as needed)
+maxUploadSize = 200
+
+[browser]
+# Disable server address collection since we're in production
+gatherUsageStats = false
