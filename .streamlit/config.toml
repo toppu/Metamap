@@ -19,5 +19,3 @@ enableWebsocketCompression = false
 [browser]
 # Disable server address collection since we're in production
 gatherUsageStats = false
-serverAddress = "metamap-toolbox.azurewebsites.net"
-serverPort = 443
