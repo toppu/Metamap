@@ -1,0 +1,29 @@
+[[pages]]
+path = "src/pages/Welcome.py"
+name = "🏠 Toolbox"
+icon = "🏠"
+
+[[pages]]
+path = "src/pages/Instructions.py"
+name = "📝 Instructions"
+icon = "📝"
+
+[[pages]]
+path = "src/pages/Data_Upload.py"
+name = "⬆️ Upload data"
+icon = "⬆️"
+
+[[pages]]
+path = "src/pages/Statistical_Analysis.py"
+name = "📊 Statistical analysis"
+icon = "📊"
+
+[[pages]]
+path = "src/pages/Ecological_Diversity.py"
+name = "📖 Ecological measures"
+icon = "📖"
+
+[[pages]]
+path = "src/pages/Machine_Learning.py"
+name = "🌐 AI predictions"
+icon = "🌐"
