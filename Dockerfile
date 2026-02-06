@@ -66,6 +66,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py /app/
 COPY src/ /app/src/
 COPY data/ /app/data/
+COPY assets/ /app/assets/
 
 # Ensure correct permissions for data directory
 RUN mkdir -p /app/ims && chmod -R 755 /app/data /app/ims

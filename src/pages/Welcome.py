@@ -14,5 +14,8 @@ It provides basic exploratory analysis and statistical tests tools. The website 
 
 st.write('Here is a preview of the website once the data has been uploaded: ')
 
-if os.path.exists('./ims/glimpse.png'):
-    st.image('./ims/glimpse.png')
+image_path = 'assets/glimpse.png'
+if os.path.exists(image_path):
+    st.image(image_path)
+else:
+    st.warning(f"Image not found at: {image_path}")
