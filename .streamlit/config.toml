@@ -8,11 +8,16 @@ headless = true
 
 # Configure the server address
 address = "0.0.0.0"
-port = 8000
+port = 8080
 
 # Increase max upload size to 200MB (adjust as needed)
 maxUploadSize = 200
 
+# WebSocket configuration for Azure
+enableWebsocketCompression = false
+
 [browser]
 # Disable server address collection since we're in production
 gatherUsageStats = false
+serverAddress = "metamap-toolbox.azurewebsites.net"
+serverPort = 443
