@@ -1,6 +1,6 @@
 [server]
-# Allow connections from Azure domain
-enableCORS = false
+# Enable CORS but configure for Azure
+enableCORS = true
 enableXsrfProtection = false
 
 # Set headless mode for deployment

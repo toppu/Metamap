@@ -93,7 +93,7 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
     echo '# Start Streamlit application' >> /usr/local/bin/start-services.sh && \
     echo 'echo "=== Starting Streamlit on 0.0.0.0:8080 ==="' >> /usr/local/bin/start-services.sh && \
-    echo 'exec streamlit run --server.port=8080 --server.address=0.0.0.0 --server.enableCORS=false --server.enableXsrfProtection=false --server.enableWebsocketCompression=false app.py' >> /usr/local/bin/start-services.sh && \
+    echo 'exec streamlit run --server.port=8080 --server.address=0.0.0.0 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false app.py' >> /usr/local/bin/start-services.sh && \
     chmod +x /usr/local/bin/start-services.sh
 
 # ============================================================================
@@ -108,7 +108,6 @@ ENV STREAMLIT_SERVER_PORT=8080 \
     STREAMLIT_SERVER_HEADLESS=true \
     STREAMLIT_BROWSER_GATHER_USAGE_STATS=false \
     STREAMLIT_SERVER_FILE_WATCHER_TYPE=none \
-    STREAMLIT_SERVER_ENABLE_CORS=false \
     STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false \
     STREAMLIT_SERVER_ENABLE_WEBSOCKET_COMPRESSION=false \
     R_SERVICE_URL=http://127.0.0.1:6311 \
