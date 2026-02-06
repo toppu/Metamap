@@ -102,10 +102,6 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
 # Expose Streamlit port (Rserve on 127.0.0.1 only, not exposed)
 EXPOSE 8080
 
-# Health check for Streamlit
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8080/_stcore/health || exit 1
-
 # Environment variables for Streamlit
 ENV STREAMLIT_SERVER_PORT=8080 \
     STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
