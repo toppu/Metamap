@@ -19,6 +19,11 @@ from src.utils.helpers import (
 add_page_title()
 pio.templates.default = "plotly"
 
+# Check if required session state exists
+if 'y' not in st.session_state:
+    st.warning("⚠️ Please upload data first from the 'Upload data' page.")
+    st.stop()
+
 try:
     y = st.session_state.y
     st.divider()
