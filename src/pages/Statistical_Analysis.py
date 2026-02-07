@@ -19,6 +19,12 @@ add_page_title()
 
 pandas2ri.activate()
 pio.templates.default = "plotly"
+
+# Check if required session state exists
+if 'proceed' not in st.session_state or not st.session_state.proceed:
+    st.warning("⚠️ Please upload data first from the 'Upload data' page.")
+    st.stop()
+
 try:
     if st.session_state.proceed and st.session_state.otu_type == 'Read counts':
         if st.session_state.last_level >= st.session_state.level_to_int['kingdom']:

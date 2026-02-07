@@ -21,6 +21,11 @@ add_page_title()
 pandas2ri.activate()
 pio.templates.default = "plotly"
 
+# Check if required session state exists
+if 'proceed' not in st.session_state or not st.session_state.proceed:
+    st.warning("⚠️ Please upload data first from the 'Upload data' page.")
+    st.stop()
+
 if "proceed" in st.session_state.keys() and st.session_state.proceed:
     
     # Load data once for all tabs
