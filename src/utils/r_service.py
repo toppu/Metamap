@@ -2,6 +2,11 @@
 R Service Wrapper - Provides seamless integration with R service via pyRserve
 Replaces rpy2 functionality for microservices architecture
 """
+# Suppress deprecation warnings from pkg_resources
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import io
 import os
 import queue
@@ -17,7 +22,7 @@ import pyRserve
 R_SERVICE_URL = os.getenv('R_SERVICE_URL', 'http://metamap-r:6311')
 R_HOST = R_SERVICE_URL.split('://')[-1].split(':')[0]
 R_PORT = int(R_SERVICE_URL.split(':')[-1])
-R_POOL_SIZE = int(os.getenv('R_POOL_SIZE', '3'))  # Connection pool size
+R_POOL_SIZE = int(os.getenv('R_POOL_SIZE', '1'))  # Single connection (reduces startup time)
 
 class RConnection:
     """Manages connection to R service"""
@@ -310,3 +315,12 @@ class pandas2ri:
         """Convert R object to Python"""
         conn = get_r_connection()
         return conn.r2py(r_obj)
+
+
+def initialize_pool():
+    """Pre-initialize the R connection pool at startup"""
+    try:
+        pool = get_r_connection_pool()
+        pool._initialize()
+    except Exception as e:
+        print(f"⚠️  R connection pool initialization deferred: {e}")

@@ -98,12 +98,26 @@ def load_data():
     st.header('Upload your data')
     int_to_str_var = dict({0: 0, 1: 1})
     col1, col2 = st.columns(2)
+    
+    # Initialize session state for uploaded files to persist across reconnections
+    if 'uploaded_metadata' not in st.session_state:
+        st.session_state.uploaded_metadata = None
+    if 'uploaded_mcb' not in st.session_state:
+        st.session_state.uploaded_mcb = None
+    
     with col1:
         metadata_bool = False
         st.write('Upload your metadata file')
-        metadata_raw = st.file_uploader("Choose a file", type='csv', key='mt')
+        metadata_file = st.file_uploader("Choose a file", type='csv', key='mt')
+        
+        # Store uploaded file in session state immediately
+        if metadata_file is not None:
+            st.session_state.uploaded_metadata = pd.read_csv(metadata_file)
+        
+        # Use the persisted data from session state
+        metadata_raw = st.session_state.uploaded_metadata
+        
         if metadata_raw is not None:
-            metadata_raw = pd.read_csv(metadata_raw)
             if 'bin_var' not in metadata_raw.columns or 'id' not in metadata_raw.columns: 
                 st.error('Your metadata file must have a column named "bin_var" for the binary variable your\'re studying and a column named "id" for the sample ids')
                 st.write('Your metadata file has the following columns:')
@@ -138,13 +152,19 @@ def load_data():
 
     with col2:
         st.write('Upload your microbiome file')
-        mcb_raw = st.file_uploader("Choose a file", type='csv', key='mcr')
+        mcb_file = st.file_uploader("Choose a file", type='csv', key='mcr')
+        
+        # Store uploaded file in session state immediately
+        if mcb_file is not None:
+            st.session_state.uploaded_mcb = pd.read_csv(mcb_file)
+        
+        # Use the persisted data from session state
+        mcb_raw = st.session_state.uploaded_mcb
+        
         if mcb_raw is not None:
-            mcb_raw = pd.read_csv(mcb_raw)
             if 'taxonomy' not in mcb_raw.columns:
                 st.error('Your metadata file must have a column named "taxonomy"')
-
-            if mcb_raw is not None:
+            else:
                 st.success('File uploaded successfully')
      
     proceed = metadata_raw is not None and mcb_raw is not None and metadata_bool

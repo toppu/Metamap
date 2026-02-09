@@ -1,3 +1,8 @@
+# Suppress deprecation warnings from pkg_resources (used by some dependencies)
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import os
 
 import streamlit as st
