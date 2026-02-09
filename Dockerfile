@@ -76,20 +76,15 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN mkdir -p /app/ims && chmod -R 755 /app/data /app/ims
 
 # ============================================================================
-# STEP 5: Create startup script (nginx + R service + Python app)
+# STEP 5: Create startup script (R service + Python app + nginx last)
 # ============================================================================
 RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo 'set -e' >> /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
-    echo '# Start nginx in background' >> /usr/local/bin/start-services.sh && \
-    echo 'echo "=== Starting nginx on 0.0.0.0:8080 ==="' >> /usr/local/bin/start-services.sh && \
-    echo 'nginx' >> /usr/local/bin/start-services.sh && \
-    echo 'sleep 1' >> /usr/local/bin/start-services.sh && \
-    echo '' >> /usr/local/bin/start-services.sh && \
-    echo '# Start Rserve in background' >> /usr/local/bin/start-services.sh && \
+    echo '# Start Rserve FIRST (required by Python app)' >> /usr/local/bin/start-services.sh && \
     echo 'echo "=== Starting Rserve on 127.0.0.1:6311 ==="' >> /usr/local/bin/start-services.sh && \
     echo 'R CMD Rserve --no-save --RS-conf /etc/Rserve/Rserv.conf' >> /usr/local/bin/start-services.sh && \
-    echo 'sleep 3' >> /usr/local/bin/start-services.sh && \
+    echo 'sleep 2' >> /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
     echo '# Verify Rserve is running' >> /usr/local/bin/start-services.sh && \
     echo 'if nc -z 127.0.0.1 6311 2>/dev/null; then' >> /usr/local/bin/start-services.sh && \
@@ -99,9 +94,27 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-services.sh && \
     echo '  exit 1' >> /usr/local/bin/start-services.sh && \
     echo 'fi' >> /usr/local/bin/start-services.sh && \
     echo '' >> /usr/local/bin/start-services.sh && \
-    echo '# Start Streamlit application on port 8501 (nginx proxies 8080 -> 8501)' >> /usr/local/bin/start-services.sh && \
+    echo '# Start Streamlit in background' >> /usr/local/bin/start-services.sh && \
     echo 'echo "=== Starting Streamlit on 127.0.0.1:8501 ==="' >> /usr/local/bin/start-services.sh && \
-    echo 'exec streamlit run --server.port=8501 --server.address=127.0.0.1 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false --server.runOnSave=false --global.developmentMode=false app.py' >> /usr/local/bin/start-services.sh && \
+    echo 'streamlit run --server.port=8501 --server.address=127.0.0.1 --server.enableXsrfProtection=false --server.enableWebsocketCompression=false --server.runOnSave=false --global.developmentMode=false app.py &' >> /usr/local/bin/start-services.sh && \
+    echo 'STREAMLIT_PID=$!' >> /usr/local/bin/start-services.sh && \
+    echo '' >> /usr/local/bin/start-services.sh && \
+    echo '# Wait for Streamlit to be ready before starting nginx' >> /usr/local/bin/start-services.sh && \
+    echo 'echo "⏳ Waiting for Streamlit to be ready..."' >> /usr/local/bin/start-services.sh && \
+    echo 'for i in $(seq 1 30); do' >> /usr/local/bin/start-services.sh && \
+    echo '  if nc -z 127.0.0.1 8501 2>/dev/null; then' >> /usr/local/bin/start-services.sh && \
+    echo '    echo "✅ Streamlit is ready on 127.0.0.1:8501"' >> /usr/local/bin/start-services.sh && \
+    echo '    break' >> /usr/local/bin/start-services.sh && \
+    echo '  fi' >> /usr/local/bin/start-services.sh && \
+    echo '  sleep 1' >> /usr/local/bin/start-services.sh && \
+    echo 'done' >> /usr/local/bin/start-services.sh && \
+    echo '' >> /usr/local/bin/start-services.sh && \
+    echo '# Start nginx LAST (after Streamlit is ready)' >> /usr/local/bin/start-services.sh && \
+    echo 'echo "=== Starting nginx on 0.0.0.0:8080 ==="' >> /usr/local/bin/start-services.sh && \
+    echo 'nginx' >> /usr/local/bin/start-services.sh && \
+    echo '' >> /usr/local/bin/start-services.sh && \
+    echo '# Wait for Streamlit process' >> /usr/local/bin/start-services.sh && \
+    echo 'wait $STREAMLIT_PID' >> /usr/local/bin/start-services.sh && \
     chmod +x /usr/local/bin/start-services.sh
 
 # ============================================================================
@@ -119,7 +132,8 @@ ENV STREAMLIT_SERVER_PORT=8080 \
     STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false \
     STREAMLIT_SERVER_ENABLE_WEBSOCKET_COMPRESSION=false \
     R_SERVICE_URL=http://127.0.0.1:6311 \
-    PYTHONWARNINGS="ignore::DeprecationWarning:pkg_resources"
+    PYTHONWARNINGS="ignore::DeprecationWarning" \
+    PIP_NO_WARN_SCRIPT_LOCATION=0
 
 # Start both services
 CMD ["/usr/local/bin/start-services.sh"]

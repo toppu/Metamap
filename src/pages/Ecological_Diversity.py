@@ -21,6 +21,29 @@ add_page_title()
 pandas2ri.activate()
 pio.templates.default = "plotly"
 
+# Helper function to convert R result to numpy array
+def r_to_numeric(r_result):
+    if isinstance(r_result, dict):
+        # If it's a dict (named vector), extract values
+        return np.array(list(r_result.values()), dtype=float)
+    elif hasattr(r_result, '__iter__') and not isinstance(r_result, str):
+        # If it's array-like, convert directly
+        return np.array(list(r_result), dtype=float)
+    else:
+        # Single value
+        return np.array([r_result], dtype=float)
+
+# Cache alpha diversity calculations to avoid repeated R calls
+@st.cache_data(show_spinner=False)
+def calculate_alpha_diversity(_mcb_df, alpha_func, level_name, data_hash):
+    """Calculate alpha diversity for a given taxa level (cached)"""
+    result = robjects[alpha_func](_mcb_df)
+    return r_to_numeric(result)
+
+def get_data_hash(df):
+    """Generate a hash for DataFrame to use as cache key"""
+    return hash(tuple(df.values.flatten()[:100]))
+
 # Check if required session state exists
 if 'proceed' not in st.session_state or not st.session_state.proceed:
     st.warning("⚠️ Please upload data first from the 'Upload data' page.")
@@ -70,39 +93,20 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
             alpha_func = 'shannon'
         
         # Calculate alpha diversity for each selected level
-        # Helper function to convert R result to numpy array
-        def r_to_numeric(r_result):
-            if isinstance(r_result, dict):
-                # If it's a dict (named vector), extract values
-                return np.array(list(r_result.values()), dtype=float)
-            elif hasattr(r_result, '__iter__') and not isinstance(r_result, str):
-                # If it's array-like, convert directly
-                return np.array(list(r_result), dtype=float)
-            else:
-                # Single value
-                return np.array([r_result], dtype=float)
-        
         if 'species' in levels:
-            result = robjects[alpha_func](mcb_s)
-            alpha_data['species'] = r_to_numeric(result)
+            alpha_data['species'] = calculate_alpha_diversity(mcb_s, alpha_func, 'species', get_data_hash(mcb_s))
         if 'genus' in levels:
-            result = robjects[alpha_func](mcb_g)
-            alpha_data['genus'] = r_to_numeric(result)
+            alpha_data['genus'] = calculate_alpha_diversity(mcb_g, alpha_func, 'genus', get_data_hash(mcb_g))
         if 'family' in levels:
-            result = robjects[alpha_func](mcb_f)
-            alpha_data['family'] = r_to_numeric(result)
+            alpha_data['family'] = calculate_alpha_diversity(mcb_f, alpha_func, 'family', get_data_hash(mcb_f))
         if 'order' in levels:
-            result = robjects[alpha_func](mcb_o)
-            alpha_data['order'] = r_to_numeric(result)
+            alpha_data['order'] = calculate_alpha_diversity(mcb_o, alpha_func, 'order', get_data_hash(mcb_o))
         if 'class' in levels:
-            result = robjects[alpha_func](mcb_c)
-            alpha_data['class'] = r_to_numeric(result)
+            alpha_data['class'] = calculate_alpha_diversity(mcb_c, alpha_func, 'class', get_data_hash(mcb_c))
         if 'phylum' in levels:
-            result = robjects[alpha_func](mcb_p)
-            alpha_data['phylum'] = r_to_numeric(result)
+            alpha_data['phylum'] = calculate_alpha_diversity(mcb_p, alpha_func, 'phylum', get_data_hash(mcb_p))
         if 'kingdom' in levels:
-            result = robjects[alpha_func](mcb_k)
-            alpha_data['kingdom'] = r_to_numeric(result)
+            alpha_data['kingdom'] = calculate_alpha_diversity(mcb_k, alpha_func, 'kingdom', get_data_hash(mcb_k))
         
         fig = px.box(alpha_data, y=levels, color='bin_var', title=f'Alpha Diversity using {alpha_measure}')
         fig.update_traces(marker=dict(size=4, opacity=0.5), boxpoints='all', jitter=0.3, pointpos=0)
