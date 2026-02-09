@@ -106,7 +106,9 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
         
         fig = px.box(alpha_data, y=levels, color='bin_var', title=f'Alpha Diversity using {alpha_measure}')
         fig.update_traces(marker=dict(size=4, opacity=0.5), boxpoints='all', jitter=0.3, pointpos=0)
-        fig.for_each_trace(lambda t: t.update(name = st.session_state.int_to_str_var[int(t.name)]))
+        # Update trace names if int_to_str_var is available
+        if 'int_to_str_var' in st.session_state:
+            fig.for_each_trace(lambda t: t.update(name = st.session_state.int_to_str_var[int(t.name)]))
         st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
 
         st.subheader('Statistical tests of alpha diversity')
@@ -232,7 +234,9 @@ if "proceed" in st.session_state.keys() and st.session_state.proceed:
                             bt['bin_var'] = np.array(y).astype(str)
                             fig = px.scatter(bt, x='PC1', y='PC2', color='bin_var', 
                                            title=f'Beta Diversity using {beta_measure} and {dim_red}')
-                            fig.for_each_trace(lambda t: t.update(name=st.session_state.int_to_str_var[int(t.name)]))
+                            # Update trace names if int_to_str_var is available
+                            if 'int_to_str_var' in st.session_state:
+                                fig.for_each_trace(lambda t: t.update(name=st.session_state.int_to_str_var[int(t.name)]))
                             st.plotly_chart(fig, use_container_width=True, config=st.session_state.config)
                             break
                         elif status.startswith("ERROR:"):
